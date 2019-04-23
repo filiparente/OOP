@@ -3,9 +3,14 @@ package pooproject;
 import java.util.ArrayList;
 
 import graph.*;
+import event.*;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import colony.Ant;
+import colony.Colony;
 
 public class Parser extends DefaultHandler {
 
@@ -13,7 +18,8 @@ public class Parser extends DefaultHandler {
 	protected double finalinst, plevel, alpha, beta, delta, eta, rho;
 	protected Node node;
 	protected Graph graph;
-	
+	protected Colony sim;
+	protected Event event;
 	
 	protected ArrayList<Node> nodeList = null;
 	
@@ -120,6 +126,10 @@ public class Parser extends DefaultHandler {
 	public void setNodeList(ArrayList<Node> nodeList) {
 		this.nodeList = nodeList;
 	}
+	
+	public Colony getColony() {
+		return this.sim;
+	}
 
 	boolean bWeight = false;
 
@@ -131,15 +141,28 @@ public class Parser extends DefaultHandler {
 			finalinst = Double.parseDouble(attributes.getValue("finalinst"));
 			antcolsize = Integer.parseInt(attributes.getValue("antcolsize"));
 			plevel = Double.parseDouble(attributes.getValue("plevel"));
+			
 		
+			
 		} else if (qName.equalsIgnoreCase("graph")) {
 			nbnodes = Integer.parseInt(attributes.getValue("nbnodes"));
 			nestnode = Integer.parseInt(attributes.getValue("nestnode"));
 			graph = new Graph(nbnodes, nestnode);
+			
+			sim = new Colony(finalinst, antcolsize, plevel, graph);	
+			Event.setSim(sim);
+			
+			
 			//create a new node and set id
 			for (int i = 1; i<=nbnodes; i++) {
 				node = new Node(i);
 				graph.setNode(node, i);
+			}
+			
+			for(int i=1; i<=antcolsize; i++) {
+				Ant ant = new Ant();
+				ant.setNodePath(graph.getNode(nestnode)); //add the nest node to the ants path
+				sim.setAnt(ant, i);
 			}
 			
 		} else if (qName.equalsIgnoreCase("node")) {
@@ -158,9 +181,20 @@ public class Parser extends DefaultHandler {
 			alpha = Double.parseDouble(attributes.getValue("alpha"));
 			beta = Double.parseDouble(attributes.getValue("beta"));
 			delta = Double.parseDouble(attributes.getValue("delta"));	
+			
+			//event = new Move(0.0, alpha, beta, delta);
+			Move.setAlpha(alpha);
+			Move.setBeta(beta);
+			Move.setDelta(delta);
+			
+			
 		} else if (qName.equalsIgnoreCase("evaporation")) {
 			eta = Double.parseDouble(attributes.getValue("eta"));
 			rho = Double.parseDouble(attributes.getValue("rho"));
+			
+			//event = new Evaporation(0.0, eta, rho);
+			Evaporation.setEta(eta);
+			Evaporation.setRho(rho);
 		}
 	}
 
@@ -168,7 +202,7 @@ public class Parser extends DefaultHandler {
 	public void characters(char ch[], int start, int length) throws SAXException {
 		if(bWeight) {
 			edge_cost = Integer.parseInt(new String(ch, start, length));
-			Edge edge = new Edge( nodeidx, targetnode, edge_cost,0.0);
+			Edge edge = new Edge(nodeidx, targetnode, edge_cost,0.0);
 			graph.getNode(nodeidx).addEdge(edge);
 			graph.getNode(targetnode).addEdge(edge);
 
