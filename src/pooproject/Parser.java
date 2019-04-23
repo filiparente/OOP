@@ -5,8 +5,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-
-
 public class Parser extends DefaultHandler {
 
 	protected int antcolsize, nbnodes, nestnode, targetnode, edge_cost;
