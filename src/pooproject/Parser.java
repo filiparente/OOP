@@ -1,15 +1,18 @@
 package pooproject;
 
 import java.util.ArrayList;
+
+import graph.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class Parser extends DefaultHandler {
 
-	protected int antcolsize, nbnodes, nestnode, targetnode, edge_cost;
+	protected int antcolsize, nbnodes, nestnode, targetnode, edge_cost, nodeidx;
 	protected double finalinst, plevel, alpha, beta, delta, eta, rho;
 	protected Node node;
+	protected Graph graph;
 	
 	
 	protected ArrayList<Node> nodeList = null;
@@ -110,8 +113,8 @@ public class Parser extends DefaultHandler {
 		this.rho = rho;
 	}
 
-	public ArrayList<Node> getNodeList() {
-		return nodeList;
+	public Node[] getNodeList() {
+		return graph.getNodes();
 	}
 
 	public void setNodeList(ArrayList<Node> nodeList) {
@@ -132,18 +135,19 @@ public class Parser extends DefaultHandler {
 		} else if (qName.equalsIgnoreCase("graph")) {
 			nbnodes = Integer.parseInt(attributes.getValue("nbnodes"));
 			nestnode = Integer.parseInt(attributes.getValue("nestnode"));
+			graph = new Graph(nbnodes, nestnode);
+			//create a new node and set id
+			for (int i = 1; i<=nbnodes; i++) {
+				node = new Node(i);
+				graph.setNode(node, i);
+			}
 			
 		} else if (qName.equalsIgnoreCase("node")) {
-			String nodeidx = attributes.getValue("nodeidx");
-			
-			//create a new node and set id
-			node = new Node(Integer.parseInt(nodeidx), null);
-			
+			nodeidx = Integer.parseInt(attributes.getValue("nodeidx"));
+
 			// initialize list
 			if (nodeList == null)
 				nodeList = new ArrayList<Node>();
-			if (node.adjList == null)
-				node.adjList = new ArrayList<Adj>();
 			
 			nodeList.add(node);
 			
@@ -164,8 +168,10 @@ public class Parser extends DefaultHandler {
 	public void characters(char ch[], int start, int length) throws SAXException {
 		if(bWeight) {
 			edge_cost = Integer.parseInt(new String(ch, start, length));
-			Adj adj = new Adj(targetnode, edge_cost);
-			node.adjList.add(adj);
+			Edge edge = new Edge( nodeidx, targetnode, edge_cost,0.0);
+			graph.getNode(nodeidx).addEdge(edge);
+			graph.getNode(targetnode).addEdge(edge);
+
 			bWeight = false;
 		}
 	}

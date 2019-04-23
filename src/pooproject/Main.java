@@ -1,6 +1,7 @@
 package pooproject;
 import javax.xml.parsers.*;
 
+import graph.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ public class Main {
 	        saxParser.parse(new File(" tests/data1.xml"), handler);
 	        
 	        //Get nodes List
-	        ArrayList<Node> nodeList = handler.getNodeList();
+	        Node[] nodeList = handler.getNodeList();
 	        
 	        //print nodes list
 	        for(Node n : nodeList)
