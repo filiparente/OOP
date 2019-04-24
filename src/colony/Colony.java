@@ -1,6 +1,7 @@
 package colony;
 import graph.Graph;
 import event.Event;
+import pec.PEC;
 
 public class Colony {
 	double finalinst, plevel;
@@ -8,6 +9,7 @@ public class Colony {
 	Graph graph;
 	Event current_event;
 	Ant[] ants;
+	PEC pec;
 	
 	public Colony(double finalinst, int antcolsize, double plevel, Graph graph) {
 		super();
@@ -16,6 +18,7 @@ public class Colony {
 		this.plevel = plevel;
 		this.graph = graph;
 		this.ants = new Ant[antcolsize];
+		this.pec = new PEC();
 	}
 
 	public double getFinalinst() {
@@ -60,6 +63,10 @@ public class Colony {
 
 	public Event getCurrent_event() {
 		return current_event;
+	}
+	
+	public PEC getPec() {
+		return pec;
 	}
 
 	public void setCurrent_event(Event current_event) {

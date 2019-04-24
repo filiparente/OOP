@@ -1,6 +1,8 @@
 package event;
 import graph.*;
-import utils.*;
+
+import utils.Utils;
+import utils.Multinomial;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +13,7 @@ public class Move extends Event{
 	static double alpha, beta, delta;
 
 
-	public Move(double time, Ant ant, double alpha, double beta, double delta) {
+	public Move(double time, Ant ant) {
 		super(time, ant);
 	}
 
@@ -47,7 +49,7 @@ public class Move extends Event{
 
 
 	@Override
-	protected void SimulateEvent() {
+	public void SimulateEvent() {
 		// TODO
 		//Graph graph = this.sim.getGraph();
 		
@@ -100,15 +102,22 @@ public class Move extends Event{
 		Multinomial m = new Multinomial(probabilities);
 		
 		//the result is the node where the ant is going to move to
-		Node chosen_node = graph.getNode(m.sample());
+		Node chosen_node = graph.getNode(valid_list.get(m.sample()).getNode2());
 		
 		//update the ants path accordingly
+		this.ant.getPath().add(chosen_node);
 		
 		//calculate the time to traverse (traversalTime) the edge from the current node to the result node (needs the delta and the cost present in the edge) ruled by an exponential distribution with mean delta*cost
+		double traversalTime = Utils.expRandom(Move.delta*valid_list.get(m.sample()).getCost());
 		
 		//schedule new Move in currentTime + traversalTime
+		Move new_move = new Move(this.time+traversalTime, this.ant);
 		
 		//add it to the PEC
+		Event.sim.getPec().addEvPEC(new_move);
+		
+		//TODO: In the simulation of the n-th move, new event must be added to the PEC: if (after the n-th move) the ant contains a Hamiltonian cycle, it should lay down pheromones in all edges constituting the cycle. Therefore, one evaporation event for each edge (constituting the cycle) must be scheduled. 
+		
 		
 	}
 	

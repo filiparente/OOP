@@ -15,7 +15,15 @@ public abstract class Event {
 		Event.sim = sim;
 	}
 	
-	protected abstract void SimulateEvent();
+	public double getTime() {
+		return time;
+	}
+
+	public void setTime(double time) {
+		this.time = time;
+	}
+
+	public abstract void SimulateEvent();
 	
 	
 }
