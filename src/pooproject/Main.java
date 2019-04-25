@@ -50,9 +50,12 @@ public class Main {
 			double currentTime = 0.0;
 			
 			//simulation cycle
-			while(currentTime < c.getFinalinst()) {
+			while(true) {
 				currentEvent = c.getPec().nextEvPEC();
 				currentTime = currentEvent.getTime();
+				if(currentTime >= c.getFinalinst()) {
+					break;
+				}
 				currentEvent.SimulateEvent();
 				System.out.printf("%f\n", currentTime);
 			}
