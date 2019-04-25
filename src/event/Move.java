@@ -112,31 +112,46 @@ public class Move extends Event{
 					
 					//the ant lays down pheromones in all edges constituting the cycle
 					double cycle_weight = 0.0;
+					this.ant.getPath().add(chosen_node);
 					List<Node> ant_path = this.ant.getPath();
 					
 					for(int i=0; i<this.ant.getPath().size()-1; i++) {
-						List<Edge> edges = this.sim.getGraph().getNodes()[ant_path.get(i).getIndex()].getEdges();
+						List<Edge> edges = this.sim.getGraph().getNodes()[ant_path.get(i).getIndex()-1].getEdges();
 						
 						//find the edge which has a node with index equal to the next node in the ants path
-						//TODO:
-						//edge = edges.get(ant_path.get(i+1).getIndex()) ESTÁ MAL!!!
-						//cycle_weight += edge.getCost();
+						for(Edge edge: edges) {
+							if(edge.getAdj(ant_path.get(i)) == ant_path.get(i+1).getIndex())
+							{
+								cycle_weight += edge.getCost();
+							}
+							
+						}
 					}
 					
 					for(int i=0; i<this.ant.getPath().size()-1; i++) {
-						Edge edge = this.sim.getGraph().getNodes()[ant_path.get(i).getIndex()].getEdges().get(ant_path.get(i+1).getIndex());
-						edge.setCost(edge.getCost() + (Move.delta*this.sim.getGraph().getW())/cycle_weight);
+						List<Edge> edges = this.sim.getGraph().getNodes()[ant_path.get(i).getIndex()-1].getEdges();
+						
+						//find the edge which has a node with index equal to the next node in the ants path
+						for(Edge edge: edges) {
+							if(edge.getAdj(ant_path.get(i)) == ant_path.get(i+1).getIndex())
+							{
+								edge.setPheromones(edge.getPheromones() + (Move.delta*this.sim.getGraph().getW())/cycle_weight);
+							}
+							
+						}
 					}
 					
-					
 				}
+				//ant restarts traversing the graph from the nest, i.e, path is updated
+				this.ant.getPath().subList(1, this.ant.getPath().size()).clear();
 				
+			}else {
+			
+				//update the ants path accordingly by removing the cycle created in the last move
+				int last_idx = this.ant.getPath().lastIndexOf(chosen_node);			
+				
+				this.ant.getPath().subList(last_idx, this.ant.getPath().size()).clear();
 			}
-			
-			//update the ants path accordingly by removing the cycle created in the last move
-			int last_idx = this.ant.getPath().lastIndexOf(chosen_node);			
-			
-			this.ant.getPath().subList(last_idx, this.ant.getPath().size()).clear();
 			
 			//calculate the time to traverse (traversalTime) the edge from the current node to the result node (needs the delta and the cost present in the edge) ruled by an exponential distribution with mean delta*cost
 			traversalTime = Utils.expRandom(Move.delta*adj_list.get(chosen_index).getCost());
