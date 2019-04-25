@@ -3,6 +3,9 @@ package pooproject;
 import java.util.ArrayList;
 
 import graph.*;
+import pec.Evaporation;
+import pec.Event;
+import pec.Move;
 import event.*;
 
 import org.xml.sax.Attributes;

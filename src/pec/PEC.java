@@ -1,7 +1,5 @@
 package pec;
 import java.util.PriorityQueue;
-import event.*;
-
 
 public class PEC {
 	PriorityQueue<Event> PEC_q = new PriorityQueue<Event>(new EventComparator());
