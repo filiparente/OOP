@@ -14,7 +14,7 @@ import colony.Colony;
 
 public class Parser extends DefaultHandler {
 
-	protected int antcolsize, nbnodes, nestnode, targetnode, edge_cost, nodeidx;
+	protected int antcolsize, nbnodes, nestnode, targetnode, edge_cost, nodeidx, W = 0;
 	protected double finalinst, plevel, alpha, beta, delta, eta, rho;
 	protected Node node;
 	protected Graph graph;
@@ -130,6 +130,10 @@ public class Parser extends DefaultHandler {
 	public Colony getColony() {
 		return this.sim;
 	}
+	
+	public int getW() {
+		return this.W;
+	}
 
 	boolean bWeight = false;
 
@@ -196,16 +200,26 @@ public class Parser extends DefaultHandler {
 			Evaporation.setEta(eta);
 			Evaporation.setRho(rho);
 		}
+		
+		
+	}
+
+	@Override
+	public void endDocument() throws SAXException {
+		// TODO Auto-generated method stub
+		super.endDocument();
+		sim.getGraph().setW(this.W);
 	}
 
 	@Override
 	public void characters(char ch[], int start, int length) throws SAXException {
 		if(bWeight) {
 			edge_cost = Integer.parseInt(new String(ch, start, length));
-			Edge edge = new Edge(nodeidx, targetnode, edge_cost,0.0);
+			Edge edge = new Edge(nodeidx, targetnode, edge_cost, 0.0);
 			graph.getNode(nodeidx).addEdge(edge);
 			graph.getNode(targetnode).addEdge(edge);
-
+			
+			this.W += edge_cost;
 			bWeight = false;
 		}
 	}

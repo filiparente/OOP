@@ -4,6 +4,8 @@ public class Graph {
 
     int nbnode;
     int nestnode;
+    int W;
+    
     Node[] nodes;
 
     public Graph(int nbnode, int nestnode) {
@@ -18,6 +20,14 @@ public class Graph {
 
     public void setNbnode(int nbnode) {
         this.nbnode = nbnode;
+    }
+    
+    public void setW(int W) {
+    	this.W = W;
+    }
+    
+    public int getW() {
+    	return this.W;
     }
 
     public int getNestnode() {

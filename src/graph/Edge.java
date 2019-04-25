@@ -2,10 +2,10 @@ package graph;
 
 public class Edge {
 
-    int node1, node2, cost;
-    double pheromones;
+    int node1, node2;
+    double cost, pheromones;
 
-    public Edge(int node1, int node2, int cost, double pheromones) {
+    public Edge(int node1, int node2, double cost, double pheromones) {
         this.node1 = node1;
         this.node2 = node2;
         this.cost = cost;
@@ -29,6 +29,13 @@ public class Edge {
 		
 		return this.node2 == node.index;
 	}
+	
+	public int getAdj(Object obj) {
+		// TODO Auto-generated method stub
+		Node node = (Node) obj;
+		
+		return ((node.index == this.node1)? this.node2 : this.node1);
+	}
 
 	public int getNode1() {
 		return node1;
@@ -46,11 +53,11 @@ public class Edge {
 		this.node2 = node2;
 	}
 
-	public int getCost() {
+	public double getCost() {
 		return cost;
 	}
 
-	public void setCost(int cost) {
+	public void setCost(double cost) {
 		this.cost = cost;
 	}
 

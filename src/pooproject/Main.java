@@ -29,7 +29,7 @@ public class Main {
 	        //Get colony
 	        Colony c = handler.getColony();
 
-	      //print number of ants in the colony: just to check if the parser is OK!
+	        //print number of ants in the colony: just to check if the parser is OK!
 	        System.out.println("Number of ants in the colony: " + c.getAnts().length);
 	        
 	        //print nodes list: just to check if the parser is OK!
@@ -49,11 +49,13 @@ public class Main {
 			
 			//simulation cycle
 			while(currentTime < c.getFinalinst()) {
-				System.out.printf("%f\n", currentTime);
-				currentEvent.SimulateEvent();
 				currentEvent = c.getPec().nextEvPEC();
 				currentTime = currentEvent.getTime();
+				currentEvent.SimulateEvent();
+				System.out.printf("%f\n", currentTime);
 			}
+			
+			System.out.println("finished");
 	        
 	        
 	       
