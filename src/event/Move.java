@@ -1,6 +1,7 @@
 package event;
 import graph.*;
 
+import pec.PEC;
 import utils.Utils;
 import utils.Multinomial;
 
@@ -10,14 +11,14 @@ import java.util.List;
 import colony.*;
 import java.util.HashMap; 
 import java.util.Map; 
-import java.util.Map.Entry; 
 
 public class Move extends Event{	
 	static double alpha, beta, delta;
-
+	Ant ant;
 
 	public Move(double time, Ant ant) {
-		super(time, ant);
+		super(time);
+		this.ant = ant;
 	}
 
 	
@@ -50,15 +51,12 @@ public class Move extends Event{
 		Move.delta = delta;
 	}
 
-
-	@Override
-	public void SimulateEvent() {
+	public void SimulateEvent(Graph graph, PEC pec) {
 		
 		//Get the ants current node
-		Node ant_currnode = this.ant.getLastNode();
+		Node ant_currnode = ant.getLastNode();
 		
 		//Get the adjacents list of the current node (from the graph)
-		Graph graph = Event.sim.getGraph();
 		List<Edge> adj_list = ant_currnode.getEdges();
 		
 		//create an auxiliar list (valid move nodes) which is the adjacents list except the intersection
@@ -67,13 +65,12 @@ public class Move extends Event{
 		//Check the intersection between the adjacents list and the path of the ant
 		for(int i=0; i<adj_list.size(); i++) {
 			Edge e = adj_list.get(i);
-			if(!this.ant.getPath().contains(Event.sim.getGraph().getNode(e.getAdj(ant_currnode)))) {
+			if(!ant.getPath().contains(graph.getNode(e.getAdj(ant_currnode)))) {
 				valid_list.add(e);
 				
 			}
 		}
-		
-		
+
 		double traversalTime = 0.0;
 		
 		if(valid_list.isEmpty()) {
@@ -102,21 +99,21 @@ public class Move extends Event{
 
 			
 			//first check if the ant moved to the nest node
-			if(chosen_node.getIndex() == this.sim.getGraph().getNestnode()) {
+			if(chosen_node.getIndex() == graph.getNestnode()) {
 				
 				//if so, update the ants path accordingly
 				//this.ant.getPath().add(chosen_node);
 				
 				//check if after adding the nest node, the ant completes a Hamiltonian cycle
-				if(check_hamiltonian_cycle(this.ant.getPath())) {
+				if(check_hamiltonian_cycle(this.ant.getPath(), graph)) {
 					
 					//the ant lays down pheromones in all edges constituting the cycle
 					double cycle_weight = 0.0;
-					this.ant.getPath().add(chosen_node);
-					List<Node> ant_path = this.ant.getPath();
+					ant.getPath().add(chosen_node);
+					List<Node> ant_path = ant.getPath();
 					
-					for(int i=0; i<this.ant.getPath().size()-1; i++) {
-						List<Edge> edges = this.sim.getGraph().getNodes()[ant_path.get(i).getIndex()-1].getEdges();
+					for(int i=0; i<ant.getPath().size()-1; i++) {
+						List<Edge> edges = graph.getNodes()[ant_path.get(i).getIndex()-1].getEdges();
 						
 						//find the edge which has a node with index equal to the next node in the ants path
 						for(Edge edge: edges) {
@@ -128,14 +125,14 @@ public class Move extends Event{
 						}
 					}
 					
-					for(int i=0; i<this.ant.getPath().size()-1; i++) {
-						List<Edge> edges = this.sim.getGraph().getNodes()[ant_path.get(i).getIndex()-1].getEdges();
+					for(int i=0; i<ant.getPath().size()-1; i++) {
+						List<Edge> edges = graph.getNodes()[ant_path.get(i).getIndex()-1].getEdges();
 						
 						//find the edge which has a node with index equal to the next node in the ants path
 						for(Edge edge: edges) {
 							if(edge.getAdj(ant_path.get(i)) == ant_path.get(i+1).getIndex())
 							{
-								edge.setPheromones(edge.getPheromones() + (Move.delta*this.sim.getGraph().getW())/cycle_weight);
+								edge.setPheromones(edge.getPheromones() + (Move.delta*graph.getW())/cycle_weight);
 							}
 							
 						}
@@ -143,14 +140,14 @@ public class Move extends Event{
 					
 				}
 				//ant restarts traversing the graph from the nest, i.e, path is updated
-				this.ant.getPath().subList(1, this.ant.getPath().size()).clear();
+				ant.getPath().subList(1, ant.getPath().size()).clear();
 				
 			}else {
 			
 				//update the ants path accordingly by removing the cycle created in the last move
-				int last_idx = this.ant.getPath().lastIndexOf(chosen_node);			
+				int last_idx = ant.getPath().lastIndexOf(chosen_node);
 				
-				this.ant.getPath().subList(last_idx, this.ant.getPath().size()).clear();
+				ant.getPath().subList(last_idx, ant.getPath().size()).clear();
 			}
 			
 			//calculate the time to traverse (traversalTime) the edge from the current node to the result node (needs the delta and the cost present in the edge) ruled by an exponential distribution with mean delta*cost
@@ -196,10 +193,10 @@ public class Move extends Event{
 		
 		
 		//schedule new Move in currentTime + traversalTime
-		Move new_move = new Move(this.time+traversalTime, this.ant);
+		Move new_move = new Move(this.time+traversalTime, ant);
 		
 		//add it to the PEC
-		Event.sim.getPec().addEvPEC(new_move);
+		pec.addEvPEC(new_move);
 		
 		//TODO: In the simulation of the n-th move, new event must be added to the PEC: if (after the n-th move) the ant contains a Hamiltonian cycle, it should lay down pheromones in all edges constituting the cycle. Therefore, one evaporation event for each edge (constituting the cycle) must be scheduled. 
 		
@@ -207,9 +204,9 @@ public class Move extends Event{
 	}
 
 
-	private boolean check_hamiltonian_cycle(List<Node> path) {
-		int n_nodes = Event.sim.getGraph().getNbnode();
-		int nest_node = Event.sim.getGraph().getNestnode();
+	private boolean check_hamiltonian_cycle(List<Node> path, Graph graph) {
+		int n_nodes = graph.getNbnode();
+		int nest_node = graph.getNestnode();
 		int last_idx = path.size()-1;
 		
 		if ((path.size() == n_nodes) && path.get(0).getIndex() == nest_node)

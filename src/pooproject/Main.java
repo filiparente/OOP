@@ -23,7 +23,7 @@ public class Main {
 	    try {
 	        SAXParser saxParser = saxParserFactory.newSAXParser();
 	        Parser handler = new Parser();
-	        saxParser.parse(new File("..\\tests\\data1.xml"), handler);
+	        saxParser.parse(new File("tests/data1.xml"), handler);
 	        
 	        //Get nodes List
 	        Node[] nodeList = handler.getNodeList();

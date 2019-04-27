@@ -1,4 +1,6 @@
 package pec;
+import event.*;
+
 import java.util.PriorityQueue;
 
 public class PEC {

@@ -1,13 +1,13 @@
-package pec;
+package event;
 import graph.*;
+import pec.PEC;
 import utils.Utils;
-import colony.*;
 
 public class Evaporation extends Event{	
 	static double eta, rho;
 
-	public Evaporation(double time, Ant ant) {
-		super(time, ant);
+	public Evaporation(double time) {
+		super(time);
 	}
 
 
@@ -30,15 +30,14 @@ public class Evaporation extends Event{
 		Evaporation.rho = rho;
 	}
 	
-	@Override
-	public void SimulateEvent() {
+	public void SimulateEvent(Graph graph, PEC pec) {
 		/* TODO: In the simulation of the n-th evaporation, one new event might be added to the PEC:
 		if (after the n-th evaporation) the pheromones level of the respective edge is greater than zero, 
 		the (n+1)-th evaporation of the respective edge.*/
 		
 		//Get all edges of the graph with a positive pheromone level
 		//reduce the level of all previous edges by rho, if possible (pheromone level must be positive, otherwise throw an exception?)
-		for(Node node: this.sim.getGraph().getNodes()) {
+		for(Node node: graph.getNodes()) {
 			for(Edge edge: node.getEdges()) {
 				edge.setPheromones(edge.getPheromones()-Evaporation.rho);
 			}
@@ -49,9 +48,9 @@ public class Evaporation extends Event{
 		double evaporationTime = Utils.expRandom(Evaporation.eta);
 		
 		//schedule new Evaporation event in currentTime + evaporationTime
-		Evaporation new_evaporation = new Evaporation(this.time+evaporationTime, this.ant);
+		Evaporation new_evaporation = new Evaporation(this.time+evaporationTime);
 		
 		//add it to the PEC
-		Event.sim.getPec().addEvPEC(new_evaporation);
+		pec.addEvPEC(new_evaporation);
 	}
 }

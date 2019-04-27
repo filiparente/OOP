@@ -1,4 +1,4 @@
-package pec;
+package event;
 
 import java.util.*;
 
