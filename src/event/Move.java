@@ -209,9 +209,7 @@ public class Move extends Event{
 		//add it to the PEC
 		pec.addEvPEC(new_move);
 
-		System.out.println(ant.getPath());
-		
-		//TODO: In the simulation of the n-th move, new event must be added to the PEC: if (after the n-th move) the ant contains a Hamiltonian cycle, it should lay down pheromones in all edges constituting the cycle. Therefore, one evaporation event for each edge (constituting the cycle) must be scheduled. 
+		System.out.println(ant.getPath()); 
 
 	}
 

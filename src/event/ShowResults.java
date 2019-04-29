@@ -40,7 +40,7 @@ public class ShowResults extends Event{
 			}	
 		}
 		
-		my_str += "Observation " + observation + "\n\t\t Present instant: " + time + "\n\t\t Number of move events: " + mevents + "\n\t\t Number of evaporation events: " + eevents + "\n\t\t Hamiltonian cycle: {";
+		my_str += "Observation " + observation + ":\n\t\t Present instant: " + time + "\n\t\t Number of move events: " + mevents + "\n\t\t Number of evaporation events: " + eevents + "\n\t\t Hamiltonian cycle: {";
 	
 		for (graph.Node node: chosen_ant.getShortest()) {
 			my_str += node.getIndex() + ",";
