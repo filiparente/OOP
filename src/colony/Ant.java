@@ -5,10 +5,13 @@ import java.util.*;
 
 public class Ant {
 	List<Node> path;
+	List<Node> shortest;
+	double weight;
 
 	public Ant() {
 		this.path = new LinkedList<Node>();
-		
+		this.shortest = new LinkedList<Node>();
+		this.weight = Double.POSITIVE_INFINITY;
 	}
 
 	public List<Node> getPath() {
@@ -33,7 +36,22 @@ public class Ant {
 		return this.path.remove(node); //returns true if the node is present, false otherwise
 		//TODO: CATCH ERROR IF RETURN GIVES FALSE, MEANS TRYING TO REMOVE A NODE THAT WAS NOT IN THE ANT'S PATH!!
 	}
-	
-	
+
+	public List<Node> getShortest() {
+		return shortest;
+	}
+
+	public void setShortest(List<Node> shortest) {
+		this.shortest = List.copyOf(shortest);
+	}
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
 
 }

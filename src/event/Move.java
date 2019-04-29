@@ -5,19 +5,16 @@ import pec.PEC;
 import utils.Utils;
 import utils.Multinomial;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import colony.*;
-import java.util.HashMap; 
-import java.util.Map; 
 
 public class Move extends Event{	
 	static double alpha, beta, delta;
 	Ant ant;
 
-	public Move(double time, Ant ant) {
-		super(time);
+	public Move(double time, Ant ant, Graph graph, PEC pec) {
+		super(time, graph, pec);
 		this.ant = ant;
 	}
 
@@ -51,7 +48,8 @@ public class Move extends Event{
 		Move.delta = delta;
 	}
 
-	public void SimulateEvent(Graph graph, PEC pec) {
+	@Override
+	public void SimulateEvent() {
 		
 		//Get the ants current node
 		Node ant_currnode = ant.getLastNode();
@@ -132,16 +130,27 @@ public class Move extends Event{
 						for(Edge edge: edges) {
 							if(edge.getAdj(ant_path.get(i)) == ant_path.get(i+1).getIndex())
 							{
+								//todo aqui é gama e nao delta
 								edge.setPheromones(edge.getPheromones() + (Move.delta*graph.getW())/cycle_weight);
+								//TODO criar evento de evaporate para todas as edges e meter no pec
 							}
 							
 						}
 					}
-					
+
+					System.out.println("HAMILTON:" + cycle_weight);
+					ant.getPath().subList(ant.getPath().size()-1, ant.getPath().size()).clear();
+
+					if(cycle_weight < ant.getWeight()) {
+						ant.setShortest(ant.getPath());
+						ant.setWeight(cycle_weight);
+					}
+
 				}
+
 				//ant restarts traversing the graph from the nest, i.e, path is updated
 				ant.getPath().subList(1, ant.getPath().size()).clear();
-				
+
 			}else {
 			
 				//update the ants path accordingly by removing the cycle created in the last move
@@ -184,23 +193,23 @@ public class Move extends Event{
 			Node chosen_node = graph.getNode((chosen_edge.getNode1() == ant_currnode.getIndex())? chosen_edge.getNode2() : chosen_edge.getNode1());
 			
 			//update the ants path accordingly
-			this.ant.getPath().add(chosen_node);
+			this.ant.setNodePath(chosen_node);
 			
 			//calculate the time to traverse (traversalTime) the edge from the current node to the result node (needs the delta and the cost present in the edge) ruled by an exponential distribution with mean delta*cost
 			traversalTime = Utils.expRandom(Move.delta*valid_list.get(chosen_index).getCost());
 
 		}
 		
-		
 		//schedule new Move in currentTime + traversalTime
-		Move new_move = new Move(this.time+traversalTime, ant);
+		Move new_move = new Move(this.time+traversalTime, ant, graph, pec);
 		
 		//add it to the PEC
 		pec.addEvPEC(new_move);
+
+		System.out.println(ant.getPath());
 		
 		//TODO: In the simulation of the n-th move, new event must be added to the PEC: if (after the n-th move) the ant contains a Hamiltonian cycle, it should lay down pheromones in all edges constituting the cycle. Therefore, one evaporation event for each edge (constituting the cycle) must be scheduled. 
-		
-		
+
 	}
 
 

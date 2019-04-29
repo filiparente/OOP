@@ -3,9 +3,8 @@ package pooproject;
 import java.util.ArrayList;
 
 import graph.*;
-import pec.Evaporation;
-import pec.Event;
-import pec.Move;
+import pec.PEC;
+import simulation.*;
 import event.*;
 
 import org.xml.sax.Attributes;
@@ -21,8 +20,8 @@ public class Parser extends DefaultHandler {
 	protected double finalinst, plevel, alpha, beta, delta, eta, rho;
 	protected Node node;
 	protected Graph graph;
-	protected Colony sim;
-	protected Event event;
+	protected Colony col;
+	protected Simulation sim;
 	
 	protected ArrayList<Node> nodeList = null;
 	
@@ -131,9 +130,11 @@ public class Parser extends DefaultHandler {
 	}
 	
 	public Colony getColony() {
-		return this.sim;
+		return this.col;
 	}
-	
+
+	public Simulation getSim() {return  this.sim; }
+
 	public int getW() {
 		return this.W;
 	}
@@ -148,17 +149,13 @@ public class Parser extends DefaultHandler {
 			finalinst = Double.parseDouble(attributes.getValue("finalinst"));
 			antcolsize = Integer.parseInt(attributes.getValue("antcolsize"));
 			plevel = Double.parseDouble(attributes.getValue("plevel"));
-			
-		
+
+			col = new Colony(antcolsize);
 			
 		} else if (qName.equalsIgnoreCase("graph")) {
 			nbnodes = Integer.parseInt(attributes.getValue("nbnodes"));
 			nestnode = Integer.parseInt(attributes.getValue("nestnode"));
 			graph = new Graph(nbnodes, nestnode);
-			
-			sim = new Colony(finalinst, antcolsize, plevel, graph);	
-			Event.setSim(sim);
-			
 			
 			//create a new node and set id
 			for (int i = 1; i<=nbnodes; i++) {
@@ -168,8 +165,8 @@ public class Parser extends DefaultHandler {
 			
 			for(int i=1; i<=antcolsize; i++) {
 				Ant ant = new Ant();
-				ant.setNodePath(graph.getNode(nestnode)); //add the nest node to the ants path
-				sim.setAnt(ant, i);
+				ant.setNodePath( graph.getNode(nestnode)); //add the nest node to the ants path
+				col.setAnt(ant, i);
 			}
 			
 		} else if (qName.equalsIgnoreCase("node")) {
@@ -203,15 +200,15 @@ public class Parser extends DefaultHandler {
 			Evaporation.setEta(eta);
 			Evaporation.setRho(rho);
 		}
-		
-		
+
+		sim = new Simulation(antcolsize, finalinst, plevel, new PEC(), col, graph);
 	}
 
 	@Override
 	public void endDocument() throws SAXException {
 		// TODO Auto-generated method stub
 		super.endDocument();
-		sim.getGraph().setW(this.W);
+		sim.getGraph().setW(this.W * this.plevel);
 	}
 
 	@Override

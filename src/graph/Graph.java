@@ -4,7 +4,7 @@ public class Graph {
 
     int nbnode;
     int nestnode;
-    int W;
+    double W;
     
     Node[] nodes;
 
@@ -22,11 +22,11 @@ public class Graph {
         this.nbnode = nbnode;
     }
     
-    public void setW(int W) {
+    public void setW(double W) {
     	this.W = W;
     }
     
-    public int getW() {
+    public double getW() {
     	return this.W;
     }
 
