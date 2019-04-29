@@ -32,14 +32,26 @@ public class ShowResults extends Event{
 	public String toString() {
 		double min_weight = 10000;
 		colony.Ant chosen_ant = new Ant();
-		
+		String my_str ="";
 		for(colony.Ant ant: colony.getAnts()) {
 			if(ant.getWeight() < min_weight) {
 				min_weight = ant.getWeight();
 				chosen_ant = ant;
 			}	
 		}
-		return "Observation " + observation + "\n\t\t Present instant: " + time + "\n\t\t Number of move events: " + mevents + "\n\t\t Number of evaporation events: " + eevents + "\n\t\t Hamiltonian cycle: " + chosen_ant.getShortest();
+		
+		my_str += "Observation " + observation + "\n\t\t Present instant: " + time + "\n\t\t Number of move events: " + mevents + "\n\t\t Number of evaporation events: " + eevents + "\n\t\t Hamiltonian cycle: {";
+	
+		for (graph.Node node: chosen_ant.getShortest()) {
+			my_str += node.getIndex() + ",";
+		
+		}
+		
+		my_str +="}";
+		
+		return my_str;
+	
+	
 	}
 	
 	
