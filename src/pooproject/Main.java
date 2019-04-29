@@ -46,6 +46,8 @@ public class Main {
 		        currentEvent = new Move(0.0, ant , sim.getGraph(), sim.getPec() );
 				sim.getPec().addEvPEC(currentEvent);
 	        }
+	        
+	        sim.getPec().addEvPEC(new ShowResults(sim.getFinalinst()/20, sim.getGraph(), sim.getPec(),sim.getColony(), sim.getFinalinst()));
 				
 				
 			double currentTime = 0.0;

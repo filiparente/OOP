@@ -35,6 +35,9 @@ public class Evaporation extends Event{
 
 	@Override
 	public void SimulateEvent() {
+		
+		ShowResults.eevents += 1;
+		
 		/* TODO: In the simulation of the n-th evaporation, one new event might be added to the PEC:
 		if (after the n-th evaporation) the pheromones level of the respective edge is greater than zero, 
 		the (n+1)-th evaporation of the respective edge.*/

@@ -51,6 +51,8 @@ public class Move extends Event{
 	@Override
 	public void SimulateEvent() {
 		
+		ShowResults.mevents += 1;
+		
 		//Get the ants current node
 		Node ant_currnode = ant.getLastNode();
 		
