@@ -132,15 +132,16 @@ public class Move extends Event{
 						for(Edge edge: edges) {
 							if(edge.getAdj(ant_path.get(i)) == ant_path.get(i+1).getIndex())
 							{
-								//todo aqui é gama e nao delta
-								edge.setPheromones(edge.getPheromones() + (Move.delta*graph.getW())/cycle_weight);
-								//TODO criar evento de evaporate para todas as edges e meter no pec
+								edge.setPheromones(edge.getPheromones() + (graph.getW())/cycle_weight);
+								Evaporation new_evaporation = new Evaporation(this.time,edge, graph, pec);
+								pec.addEvPEC(new_evaporation);
+
 							}
 							
 						}
 					}
 
-					System.out.println("HAMILTON:" + cycle_weight);
+					System.out.println("HAMILTON:" + cycle_weight + " " +  ant.getPath());
 					ant.getPath().subList(ant.getPath().size()-1, ant.getPath().size()).clear();
 
 					if(cycle_weight < ant.getWeight()) {

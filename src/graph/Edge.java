@@ -14,12 +14,14 @@ public class Edge {
 
     @Override
     public String toString() {
-        return "Edge{" +
+        /*return "Edge{" +
                 "node1=" + node1 +
                 ", node2=" + node2 +
                 ", cost=" + cost +
                 ", pheromones=" + pheromones +
-                '}';
+                '}';*/
+
+        return "" + pheromones;
     }
 
 	@Override

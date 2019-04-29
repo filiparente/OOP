@@ -56,13 +56,14 @@ public class Main {
 			while(true) {
 				currentEvent = sim.getPec().nextEvPEC();
 				currentTime = currentEvent.getTime();
-				if(currentTime >= sim.getFinalinst()) {
+				if(currentTime > sim.getFinalinst()) {
 					break;
 				}
 				currentEvent.SimulateEvent();
 				System.out.printf("%f\n", currentTime);
 			}
 
+			System.out.println(sim.getGraph());
 			System.out.println(sim.getColony().getAnts()[0].getShortest());
 			System.out.println("finished");
 	        

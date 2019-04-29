@@ -1,5 +1,7 @@
 package graph;
 
+import java.util.Arrays;
+
 public class Graph {
 
     int nbnode;
@@ -48,5 +50,12 @@ public class Graph {
 
     public void setNode(Node node, int idx) {
         this.nodes[idx-1] = node;
+    }
+
+    @Override
+    public String toString() {
+        return "Graph{" +
+                "nodes=" + Arrays.toString(nodes) +
+                '}';
     }
 }

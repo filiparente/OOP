@@ -16,7 +16,7 @@ public class Node {
     @Override
     public String toString() {
         //return "Node{" + "index=" + index + ", edges=" + edges + "}";
-        return "" + index;
+        return "" + index + ":" + edges;
     }
 
     public int getIndex() {
