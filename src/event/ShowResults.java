@@ -47,6 +47,7 @@ public class ShowResults extends Event{
 		
 		}
 		
+		my_str = (String) my_str.subSequence(0, my_str.length()-1);
 		my_str +="}";
 		
 		return my_str;
