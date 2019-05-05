@@ -141,7 +141,6 @@ public class Move extends Event{
 						}
 					}
 
-					System.out.println("HAMILTON:" + cycle_weight + " " +  ant.getPath());
 					ant.getPath().subList(ant.getPath().size()-1, ant.getPath().size()).clear();
 
 					if(cycle_weight < ant.getWeight()) {
@@ -209,7 +208,7 @@ public class Move extends Event{
 		//add it to the PEC
 		pec.addEvPEC(new_move);
 
-		System.out.println(ant.getPath()); 
+		//System.out.println(ant.getPath());
 
 	}
 

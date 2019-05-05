@@ -23,7 +23,7 @@ public class Main {
 	    try {
 	        SAXParser saxParser = saxParserFactory.newSAXParser();
 	        Parser handler = new Parser();
-	        saxParser.parse(new File("..\\tests\\data1.xml"), handler);
+	        saxParser.parse(new File(args[0]), handler);
 
 	        //get simulation
 			Simulation sim = handler.getSim();
@@ -32,12 +32,12 @@ public class Main {
 	        Colony c = sim.getColony();
 
 	        //print number of ants in the colony: just to check if the parser is OK!
-	        System.out.println("Number of ants in the colony: " + c.getAnts().length);
-	        System.out.println("Antcolsize = " + sim.getAntcolsize());
+	        //System.out.println("Number of ants in the colony: " + c.getAnts().length);
+	        //System.out.println("Antcolsize = " + sim.getAntcolsize());
 	        
 	        //print nodes list: just to check if the parser is OK!
-	        for(Node n : sim.getGraph().getNodes())
-	            System.out.println(n);
+	        //for(Node n : sim.getGraph().getNodes())
+	          //  System.out.println(n);
 	        
 	        Event currentEvent = null;
 	        
@@ -60,12 +60,12 @@ public class Main {
 					break;
 				}
 				currentEvent.SimulateEvent();
-				System.out.printf("%f\n", currentTime);
+				//System.out.printf("%f\n", currentTime);
 			}
 
-			System.out.println(sim.getGraph());
-			System.out.println(sim.getColony().getAnts()[0].getShortest());
-			System.out.println("finished");
+			//System.out.println(sim.getGraph());
+			//System.out.println(sim.getColony().getAnts()[0].getShortest());
+			//System.out.println("finished");
 	        
 	        
 	       

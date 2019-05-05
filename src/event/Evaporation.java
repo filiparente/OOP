@@ -42,12 +42,10 @@ public class Evaporation extends Event{
 		/* TODO: In the simulation of the n-th evaporation, one new event might be added to the PEC:
 		if (after the n-th evaporation) the pheromones level of the respective edge is greater than zero, 
 		the (n+1)-th evaporation of the respective edge.*/
-		System.out.println("EVAPORATION EVENT :" + edge);
+
 		//Get all edges of the graph with a positive pheromone level
 		//reduce the level of all previous edges by rho, if possible (pheromone level must be positive, otherwise throw an exception?)
 		edge.setPheromones(edge.getPheromones()-Evaporation.rho);
-
-		System.out.println("became " + edge);
 
 		if(edge.getPheromones() <= 0)
 			edge.setPheromones(0);
