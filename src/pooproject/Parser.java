@@ -146,15 +146,36 @@ public class Parser extends DefaultHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		//super.startElement(uri, localName, qName, attributes);
 		if (qName.equalsIgnoreCase("simulation")) {
-			finalinst = Double.parseDouble(attributes.getValue("finalinst"));
-			antcolsize = Integer.parseInt(attributes.getValue("antcolsize"));
-			plevel = Double.parseDouble(attributes.getValue("plevel"));
+			if((finalinst = Double.parseDouble(attributes.getValue("finalinst"))) <= 0){
+				System.out.println("Input finalinst value needs to be bigger than 0!");
+				System.exit(1);
+			}
+
+			if((antcolsize = Integer.parseInt(attributes.getValue("antcolsize"))) <= 0){
+				System.out.println("Input antcolsize value needs to be bigger than 0!");
+				System.exit(1);
+			}
+
+			if((plevel = Double.parseDouble(attributes.getValue("plevel"))) <= 0){
+				System.out.println("Input plevel value needs to be bigger than 0!");
+				System.exit(1);
+			}
 
 			col = new Colony(antcolsize);
 			
 		} else if (qName.equalsIgnoreCase("graph")) {
-			nbnodes = Integer.parseInt(attributes.getValue("nbnodes"));
+
+			if((nbnodes = Integer.parseInt(attributes.getValue("nbnodes"))) <= 0){
+				System.out.println("Input nbnodes value needs to be bigger than 0!");
+				System.exit(1);
+			}
+
 			nestnode = Integer.parseInt(attributes.getValue("nestnode"));
+			if(nestnode <= 0 || nestnode > nbnodes ){
+				System.out.println("Input nestnode value needs to be a node of the graph!");
+				System.exit(1);
+			}
+
 			graph = new Graph(nbnodes, nestnode);
 			
 			//create a new node and set id
@@ -171,6 +192,10 @@ public class Parser extends DefaultHandler {
 			
 		} else if (qName.equalsIgnoreCase("node")) {
 			nodeidx = Integer.parseInt(attributes.getValue("nodeidx"));
+			if(nodeidx <= 0 || nodeidx > nbnodes ){
+				System.out.println("Input nodeidx (" + nodeidx + ") doesn't belong to the graph!");
+				System.exit(1);
+			}
 
 			// initialize list
 			if (nodeList == null)
@@ -180,12 +205,28 @@ public class Parser extends DefaultHandler {
 			
 		} else if (qName.equalsIgnoreCase("weight")) {
 			targetnode = Integer.parseInt(attributes.getValue("targetnode"));
+			if(targetnode <= 0 || targetnode > nbnodes ){
+				System.out.println("Input targetnode (" + targetnode + ") doesn't belong to the graph!");
+				System.exit(1);
+			}
 			bWeight = true;
 		} else if (qName.equalsIgnoreCase("move")) {
-			alpha = Double.parseDouble(attributes.getValue("alpha"));
-			beta = Double.parseDouble(attributes.getValue("beta"));
-			delta = Double.parseDouble(attributes.getValue("delta"));	
-			
+
+			if((alpha = Double.parseDouble(attributes.getValue("alpha"))) <= 0){
+				System.out.println("Input alpha value needs to be bigger than 0!");
+				System.exit(1);
+			}
+
+			if((beta = Double.parseDouble(attributes.getValue("beta"))) <= 0){
+				System.out.println("Input beta value needs to be bigger than 0!");
+				System.exit(1);
+			}
+
+			if((delta = Double.parseDouble(attributes.getValue("delta"))) <= 0){
+				System.out.println("Input delta value needs to be bigger than 0!");
+				System.exit(1);
+			}
+
 			//event = new Move(0.0, alpha, beta, delta);
 			Move.setAlpha(alpha);
 			Move.setBeta(beta);
@@ -193,8 +234,17 @@ public class Parser extends DefaultHandler {
 			
 			
 		} else if (qName.equalsIgnoreCase("evaporation")) {
-			eta = Double.parseDouble(attributes.getValue("eta"));
-			rho = Double.parseDouble(attributes.getValue("rho"));
+
+			if((eta = Double.parseDouble(attributes.getValue("eta"))) <= 0){
+				System.out.println("Input eta value needs to be bigger than 0!");
+				System.exit(1);
+			}
+
+			if((rho = Double.parseDouble(attributes.getValue("rho"))) <= 0){
+				System.out.println("Input rho value needs to be bigger than 0!");
+				System.exit(1);
+			}
+
 			
 			//event = new Evaporation(0.0, eta, rho);
 			Evaporation.setEta(eta);
