@@ -25,7 +25,6 @@ public class Ant {
 	public Node getLastNode() {
 		//returns last node visited by the ant
 		return this.path.get(this.path.size()-1); //done this way for lists
-		//return this.path.getLast(); //done this way for linkedlists
 	}
 	
 	public void setNodePath(Node node) {

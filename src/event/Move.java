@@ -90,20 +90,15 @@ public class Move extends Event{
 			
 			int chosen_index = m.sample();
 
-			
 			//the result is the node where the ant is going to move to
 			Edge chosen_edge = adj_list.get(chosen_index);
 			
 			//the result is the node where the ant is going to move to
 			Node chosen_node = graph.getNode((chosen_edge.getNode1() == ant_currnode.getIndex())? chosen_edge.getNode2() : chosen_edge.getNode1());
 
-			
 			//first check if the ant moved to the nest node
 			if(chosen_node.getIndex() == graph.getNestnode()) {
-				
-				//if so, update the ants path accordingly
-				//this.ant.getPath().add(chosen_node);
-				
+
 				//check if after adding the nest node, the ant completes a Hamiltonian cycle
 				if(check_hamiltonian_cycle(this.ant.getPath(), graph)) {
 					
@@ -132,12 +127,14 @@ public class Move extends Event{
 						for(Edge edge: edges) {
 							if(edge.getAdj(ant_path.get(i)) == ant_path.get(i+1).getIndex())
 							{
-								edge.setPheromones(edge.getPheromones() + (graph.getW())/cycle_weight);
-								Evaporation new_evaporation = new Evaporation(this.time,edge, graph, pec);
-								pec.addEvPEC(new_evaporation);
-
+								if(edge.getPheromones() > 0) {
+									edge.setPheromones(edge.getPheromones() + (graph.getW())/cycle_weight);
+								}else{
+									edge.setPheromones(edge.getPheromones() + (graph.getW())/cycle_weight);
+									Evaporation new_evaporation = new Evaporation(this.time, edge, graph, pec);
+									pec.addEvPEC(new_evaporation);
+								}
 							}
-							
 						}
 					}
 
@@ -222,14 +219,9 @@ public class Move extends Event{
 		{
 			//number of elements is correct and nest node is the first and the last node
 			//check the frequencies of the rest of the nodes in the path
-			List<Node> rest_path = path.subList(1, last_idx-1);
-			Map<Node, Integer> map = countFrequencies(rest_path);
-			
-			//checking if all elements appear only once
-	        for (Map.Entry<Node, Integer> val : map.entrySet()) { 
-	        	if(val.getValue() != 1) return false;
-	        }
-	        return true;
+			Set<Node> set = Set.copyOf(path);
+			if (set.size() == n_nodes)
+	        	return true;
 			
 		}
 		return false;
