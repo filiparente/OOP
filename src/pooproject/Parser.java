@@ -2,10 +2,8 @@ package pooproject;
 
 import java.util.ArrayList;
 
-import graph.*;
 import pec.PEC;
-import simulation.*;
-import event.*;
+import simulation.Simulation;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -13,6 +11,9 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import colony.Ant;
 import colony.Colony;
+import event.Evaporation;
+import event.Move;
+import graph.*;
 
 public class Parser extends DefaultHandler {
 

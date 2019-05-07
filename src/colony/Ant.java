@@ -1,53 +1,94 @@
 package colony;
-import graph.*;
-import java.util.*;
 
+import java.util.LinkedList;
+import java.util.List;
+import graph.Node;
 
+/**
+ * The Ant class represents ants that are created and used during a stochastic simulation execution.
+ * The ants are responsible for traversing a weighted graph in order to find the cycle with no repeated nodes with the shortest weight possible.
+ * Therefore, the implementation of Ant provided assumes that it is used in a problem using a graph represented by nodes, and the ants store the path they traverse in the graph
+ * as a list of nodes.
+ * 
+ * @authors Filipa, Gonçalo, Joana
+ *
+ */
 public class Ant {
+	
+	/**
+	 * The path traversed by the Ant as a list of Nodes.
+	 */
 	List<Node> path;
-	List<Node> shortest;
+	
+	/**
+	 * The weight associated with the Ant's path.
+	 */
 	double weight;
 
+	/**
+	 * Constructor for an Ant.
+	 * The path is set as a linked list of Nodes.
+	 * The weight of the path is initialized with infinity.
+	 */
 	public Ant() {
 		this.path = new LinkedList<Node>();
-		this.shortest = new LinkedList<Node>();
 		this.weight = Double.POSITIVE_INFINITY;
 	}
 
+	/**
+	 * Getter for the path field.
+	 * @return the ant's path.
+	 */
 	public List<Node> getPath() {
 		return path;
 	}
-
+	
+	/**
+	 * Setter for the path field.
+	 * @param path the ant's path.
+	 */
 	public void setPath(LinkedList<Node> path) {
 		this.path = path;
 	}
 	
+	/**
+	 * Method to return last node visited by the ant.
+	 * @return the last node visited by the ant.
+	 */
 	public Node getLastNode() {
-		//returns last node visited by the ant
-		return this.path.get(this.path.size()-1); //done this way for lists
+		return this.path.get(this.path.size()-1);
 	}
 	
+	/**
+	 * Method to add a node to the ant's path.
+	 * @param node the node to add to the ant's path.
+	 */
 	public void setNodePath(Node node) {
 		this.path.add(node);
 	}
 	
+	/**
+	 * Method to remove a given node from the ant's path.
+	 * @param node the node to be removed from the ant's path.
+	 * @return true if the node is present, false otherwise.
+	 */
 	public boolean removeNodePath(Node node) {
-		return this.path.remove(node); //returns true if the node is present, false otherwise
-		//TODO: CATCH ERROR IF RETURN GIVES FALSE, MEANS TRYING TO REMOVE A NODE THAT WAS NOT IN THE ANT'S PATH!!
+		return this.path.remove(node); 
+		//TODO: throw exception if the node is not found.
 	}
 
-	public List<Node> getShortest() {
-		return shortest;
-	}
-
-	public void setShortest(List<Node> shortest) {
-		this.shortest = List.copyOf(shortest);
-	}
-
+	/**
+	 * Getter for the weight field.
+	 * @return the ant's path weight.
+	 */
 	public double getWeight() {
 		return weight;
 	}
-
+	
+	/**
+	 * Setter for the weight field.
+	 * @param weight the ant's path weight.
+	 */
 	public void setWeight(double weight) {
 		this.weight = weight;
 	}

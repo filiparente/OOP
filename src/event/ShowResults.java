@@ -1,5 +1,4 @@
 package event;
-import colony.Ant;
 import colony.Colony;
 import graph.Graph;
 import pec.PEC;
@@ -14,7 +13,7 @@ public class ShowResults extends Event{
 	public ShowResults(double time, Graph graph, PEC pec, Colony colony, double finalinst) {
 		super(time, graph, pec);
 		this.colony = colony;
-		this.finalinst = finalinst;
+		ShowResults.finalinst = finalinst;
 	}
 
 	@Override
@@ -30,21 +29,12 @@ public class ShowResults extends Event{
 
 	@Override
 	public String toString() {
-		double min_weight = 10000;
-		colony.Ant chosen_ant = new Ant();
 		String my_str ="";
-		for(colony.Ant ant: colony.getAnts()) {
-			if(ant.getWeight() < min_weight) {
-				min_weight = ant.getWeight();
-				chosen_ant = ant;
-			}	
-		}
 		
 		my_str += "Observation " + observation + ":\n\t\t Present instant: " + time + "\n\t\t Number of move events: " + mevents + "\n\t\t Number of evaporation events: " + eevents + "\n\t\t Hamiltonian cycle: {";
 	
-		for (graph.Node node: chosen_ant.getShortest()) {
+		for (graph.Node node: graph.getShortest_path()) {
 			my_str += node.getIndex() + ",";
-		
 		}
 		
 		my_str = (String) my_str.subSequence(0, my_str.length()-1);

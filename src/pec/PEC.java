@@ -1,5 +1,6 @@
 package pec;
-import event.*;
+import event.Event;
+import event.EventComparator;
 
 import java.util.PriorityQueue;
 

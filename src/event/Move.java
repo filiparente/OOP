@@ -1,13 +1,16 @@
 package event;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+import colony.Ant;
 import graph.*;
 
 import pec.PEC;
 import utils.Utils;
 import utils.Multinomial;
 
-import java.util.*;
 
-import colony.*;
 
 public class Move extends Event{	
 	static double alpha, beta, delta;
@@ -140,9 +143,9 @@ public class Move extends Event{
 
 					ant.getPath().subList(ant.getPath().size()-1, ant.getPath().size()).clear();
 
-					if(cycle_weight < ant.getWeight()) {
-						ant.setShortest(ant.getPath());
-						ant.setWeight(cycle_weight);
+					if(cycle_weight < graph.getShortest_path_weight()) {
+						graph.setShortest_path(ant.getPath());
+						graph.setShortest_path_weight(cycle_weight);
 					}
 
 				}
@@ -213,7 +216,6 @@ public class Move extends Event{
 	private boolean check_hamiltonian_cycle(List<Node> path, Graph graph) {
 		int n_nodes = graph.getNbnode();
 		int nest_node = graph.getNestnode();
-		int last_idx = path.size()-1;
 		
 		if ((path.size() == n_nodes) && path.get(0).getIndex() == nest_node)
 		{
@@ -227,6 +229,9 @@ public class Move extends Event{
 		return false;
 	}
 	
+	/*
+	 * import java.util.Map;
+	 * import java.util.HashMap;
 	private Map<Node,Integer> countFrequencies(List<Node> path) 
     { 
         // hashmap to store the frequency of the nodes in the path 
@@ -239,7 +244,7 @@ public class Move extends Event{
         
         return hm;
  
-    } 
+    } */
 	
 
 }

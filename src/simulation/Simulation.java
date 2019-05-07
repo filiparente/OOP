@@ -1,11 +1,14 @@
 package simulation;
-import colony.*;
+
 import event.Event;
 import event.Move;
 import event.ShowResults;
-import graph.*;
+import graph.Graph;
+import pec.PEC;
+
 import org.xml.sax.SAXException;
-import pec.*;
+
+import colony.*;
 import pooproject.Parser;
 
 import javax.xml.parsers.ParserConfigurationException;
