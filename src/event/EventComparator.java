@@ -8,7 +8,7 @@ import java.util.Comparator;
  * The abstract parameter of the interface is specified as an Event object.
  * This class overrides the method compare() from the interface Comparator.
  * 
- * @author Filipa, Gonçalo, Joana.
+ * @author Filipa, Goncalo, Joana.
  *
  */
 public class EventComparator implements Comparator<Event>{ 

@@ -68,9 +68,9 @@ public class Move extends Event{
 		//Check the intersection between the adjacents list and the path of the ant
 		for(int i=0; i<adj_list.size(); i++) {
 			Edge e = adj_list.get(i);
-			if(!ant.getPath().contains(graph.getNode(e.getAdj(ant_currnode)))) {
+			int check = ant.getPathcheck()[e.getAdj(ant_currnode)-1];
+			if(check < 1){
 				valid_list.add(e);
-				
 			}
 		}
 
@@ -105,9 +105,8 @@ public class Move extends Event{
 				//check if after adding the nest node, the ant completes a Hamiltonian cycle
 				if(check_hamiltonian_cycle(this.ant.getPath(), graph)) {
 					
-					//the ant lays down pheromones in all edges constituting the cycle
 					double cycle_weight = 0.0;
-					ant.getPath().add(chosen_node);
+					ant.setNodePath(chosen_node);
 					List<Node> ant_path = ant.getPath();
 					
 					for(int i=0; i<ant.getPath().size()-1; i++) {
@@ -119,7 +118,6 @@ public class Move extends Event{
 							{
 								cycle_weight += edge.getCost();
 							}
-							
 						}
 					}
 					
@@ -142,7 +140,6 @@ public class Move extends Event{
 					}
 
 					ant.getPath().subList(ant.getPath().size()-1, ant.getPath().size()).clear();
-
 					if(cycle_weight < graph.getShortest_path_weight()) {
 						graph.setShortest_path(ant.getPath());
 						graph.setShortest_path_weight(cycle_weight);
@@ -152,13 +149,19 @@ public class Move extends Event{
 
 				//ant restarts traversing the graph from the nest, i.e, path is updated
 				ant.getPath().subList(1, ant.getPath().size()).clear();
+				for (int i = 0; i < ant.getPathcheck().length ; i++) {
+					ant.getPathcheck()[i] = 0;
+				}
 
 			}else {
 			
 				//update the ants path accordingly by removing the cycle created in the last move
 				int last_idx = ant.getPath().lastIndexOf(chosen_node);
-				
-				ant.getPath().subList(last_idx, ant.getPath().size()).clear();
+				List<Node> aux = ant.getPath().subList(last_idx, ant.getPath().size());
+				for (Node node : aux ) {
+					ant.getPathcheck()[node.getIndex()-1] = 0;
+				}
+				aux.clear();
 			}
 			
 			//calculate the time to traverse (traversalTime) the edge from the current node to the result node (needs the delta and the cost present in the edge) ruled by an exponential distribution with mean delta*cost

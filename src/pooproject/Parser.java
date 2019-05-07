@@ -186,7 +186,7 @@ public class Parser extends DefaultHandler {
 			}
 			
 			for(int i=1; i<=antcolsize; i++) {
-				Ant ant = new Ant();
+				Ant ant = new Ant(nbnodes);
 				ant.setNodePath( graph.getNode(nestnode)); //add the nest node to the ants path
 				col.setAnt(ant, i);
 			}

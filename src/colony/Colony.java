@@ -3,7 +3,7 @@ package colony;
 /**
  * The Colony class represents a colony of Ants.
  * 
- * @authors Filipa, Gonçalo, Joana
+ * @authors Filipa, Goncalo, Joana
  *
  */
 public class Colony {

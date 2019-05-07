@@ -6,7 +6,7 @@ import pec.PEC;
 /**
  * Abstract class Event.
  * Describes the events of the stochastic simulation. Requires the implementation of the abstract method simulateEvent().
- * @author Filipa, Gonçalo, Joana.
+ * @author Filipa, Goncalo, Joana.
  *
  */
 public abstract class Event {

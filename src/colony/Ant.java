@@ -2,6 +2,8 @@ package colony;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import graph.Graph;
 import graph.Node;
 
 /**
@@ -10,7 +12,7 @@ import graph.Node;
  * Therefore, the implementation of Ant provided assumes that it is used in a problem using a graph represented by nodes, and the ants store the path they traverse in the graph
  * as a list of nodes.
  * 
- * @authors Filipa, Gonçalo, Joana
+ * @authors Filipa, Goncalo, Joana
  *
  */
 public class Ant {
@@ -25,14 +27,17 @@ public class Ant {
 	 */
 	double weight;
 
+	int[] pathcheck;
+
 	/**
 	 * Constructor for an Ant.
 	 * The path is set as a linked list of Nodes.
 	 * The weight of the path is initialized with infinity.
 	 */
-	public Ant() {
+	public Ant(int nbnode) {
 		this.path = new LinkedList<Node>();
 		this.weight = Double.POSITIVE_INFINITY;
+		this.pathcheck = new int[nbnode];
 	}
 
 	/**
@@ -65,6 +70,7 @@ public class Ant {
 	 */
 	public void setNodePath(Node node) {
 		this.path.add(node);
+		this.pathcheck[node.getIndex()-1] = 1;
 	}
 	
 	/**
@@ -73,7 +79,11 @@ public class Ant {
 	 * @return true if the node is present, false otherwise.
 	 */
 	public boolean removeNodePath(Node node) {
-		return this.path.remove(node); 
+		if(this.path.remove(node)) {
+			this.pathcheck[node.getIndex() - 1] = 0;
+			return true;
+		}
+		return false;
 		//TODO: throw exception if the node is not found.
 	}
 
@@ -93,5 +103,11 @@ public class Ant {
 		this.weight = weight;
 	}
 
+	public int[] getPathcheck() {
+		return pathcheck;
+	}
 
+	public void setPathcheck(int[] pathcheck) {
+		this.pathcheck = pathcheck;
+	}
 }

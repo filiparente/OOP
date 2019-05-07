@@ -12,7 +12,7 @@ import utils.Utils;
  * some parameter. This implementation assumes an association with an edge belonging to
  * a graph - the graph of the stochastic simulation, inherited from the superclass Event.
  * 
- * @authors Filipa, Gonçalo, Joana.
+ * @authors Filipa, Goncalo, Joana.
  *
  */
 public class Evaporation extends Event{	
