@@ -68,8 +68,8 @@ public class Move extends Event{
 		//Check the intersection between the adjacents list and the path of the ant
 		for(int i=0; i<adj_list.size(); i++) {
 			Edge e = adj_list.get(i);
-			int check = ant.getPathcheck()[e.getAdj(ant_currnode)-1];
-			if(check < 1){
+			//int check = ant.getPathcheck()[e.getAdj(ant_currnode)-1];
+			//if(check < 1){
 			int idx = e.getAdj(ant_currnode);
 			
 			//AND of bitmask of nodes already visited by the ant and a byte of zeros 
@@ -154,9 +154,9 @@ public class Move extends Event{
 
 				//ant restarts traversing the graph from the nest, i.e, path is updated
 				ant.getPath().subList(1, ant.getPath().size()).clear();
-				for (int i = 0; i < ant.getPathcheck().length ; i++) {
-					ant.getPathcheck()[i] = 0;
-				}
+				//for (int i = 0; i < ant.getPathcheck().length ; i++) {
+				//	ant.getPathcheck()[i] = 0;
+				//}
 				
 				//reset mask: only the nest node is already visited
 				this.ant.setBitmask(1 << graph.getNestnode());
@@ -166,11 +166,11 @@ public class Move extends Event{
 			
 				//update the ants path accordingly by removing the cycle created in the last move
 				int last_idx = ant.getPath().lastIndexOf(chosen_node);
-				List<Node> aux = ant.getPath().subList(last_idx, ant.getPath().size());
+				/*List<Node> aux = ant.getPath().subList(last_idx, ant.getPath().size());
 				for (Node node : aux ) {
 					ant.getPathcheck()[node.getIndex()-1] = 0;
 				}
-				aux.clear();
+				aux.clear();*/
 				
 				//reset from bitmask
 				for(Node node: ant.getPath().subList(last_idx, ant.getPath().size())) {

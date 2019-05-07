@@ -37,7 +37,7 @@ public class Ant {
 		this.bitmask = bitmask;
 	}
 
-	int[] pathcheck;
+	//int[] pathcheck;
 
 	/**
 	 * Constructor for an Ant.
@@ -48,7 +48,7 @@ public class Ant {
 		this.path = new LinkedList<Node>();
 		this.weight = Double.POSITIVE_INFINITY;
 		this.bitmask = 0b00;
-		this.pathcheck = new int[nbnode];
+		//this.pathcheck = new int[nbnode];
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class Ant {
 	 */
 	public void setNodePath(Node node) {
 		this.path.add(node);
-		this.pathcheck[node.getIndex()-1] = 1;
+		//this.pathcheck[node.getIndex()-1] = 1;
 	}
 	
 	/**
@@ -91,7 +91,7 @@ public class Ant {
 	 */
 	public boolean removeNodePath(Node node) {
 		if(this.path.remove(node)) {
-			this.pathcheck[node.getIndex() - 1] = 0;
+			//this.pathcheck[node.getIndex() - 1] = 0;
 			return true;
 		}
 		return false;
@@ -114,11 +114,11 @@ public class Ant {
 		this.weight = weight;
 	}
 
-	public int[] getPathcheck() {
+	/*public int[] getPathcheck() {
 		return pathcheck;
 	}
 
 	public void setPathcheck(int[] pathcheck) {
 		this.pathcheck = pathcheck;
-	}
+	}*/
 }

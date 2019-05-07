@@ -56,20 +56,6 @@ public class Simulation {
 			//for(Node n : sim.getGraph().getNodes())
 			//  System.out.println(n);
 
-			int x = 1;
-	        byte a = (byte) (x<<1);
-	        
-	        System.out.println("Binary value: "+Integer.toBinaryString(a));
-	        
-	        byte b = (byte) (x<<3);
-	        System.out.println("Binary value: "+Integer.toBinaryString(a|b));
-	        
-	        //check if position 3 is visited
-	        byte visited = (byte) (a|b);
-	        byte c3 = (byte) ((byte) (1<<3) & visited);
-	        System.out.println(c3==0? "Position 3 not visited yet!" : "Already visited position 3!");
-	        
-	        
 			  
 			Event currentEvent = null;
 
