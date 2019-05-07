@@ -70,10 +70,15 @@ public class Move extends Event{
 			Edge e = adj_list.get(i);
 			int check = ant.getPathcheck()[e.getAdj(ant_currnode)-1];
 			if(check < 1){
+			int idx = e.getAdj(ant_currnode);
+			
+			//AND of bitmask of nodes already visited by the ant and a byte of zeros 
+			//and only 1 in the index of the node gives 0 if the node was not visited yet by the ant
+			if((byte) ((byte) (1<<idx) & this.ant.getBitmask()) == 0) {
 				valid_list.add(e);
 			}
 		}
-
+		
 		double traversalTime = 0.0;
 		
 		if(valid_list.isEmpty()) {
@@ -152,6 +157,10 @@ public class Move extends Event{
 				for (int i = 0; i < ant.getPathcheck().length ; i++) {
 					ant.getPathcheck()[i] = 0;
 				}
+				
+				//reset mask: only the nest node is already visited
+				this.ant.setBitmask(1 << graph.getNestnode());
+				
 
 			}else {
 			
@@ -162,6 +171,18 @@ public class Move extends Event{
 					ant.getPathcheck()[node.getIndex()-1] = 0;
 				}
 				aux.clear();
+				
+				//reset from bitmask
+				for(Node node: ant.getPath().subList(last_idx, ant.getPath().size())) {
+					int idx = node.getIndex();
+					
+					this.ant.setBitmask(this.ant.getBitmask()&~(1 << idx));
+					
+				}
+				
+				//reset from ant's path
+				ant.getPath().subList(last_idx, ant.getPath().size()).clear();
+				
 			}
 			
 			//calculate the time to traverse (traversalTime) the edge from the current node to the result node (needs the delta and the cost present in the edge) ruled by an exponential distribution with mean delta*cost
@@ -199,6 +220,9 @@ public class Move extends Event{
 			
 			//update the ants path accordingly
 			this.ant.setNodePath(chosen_node);
+			
+			//update the ants mask accordingly: put the index of the node to 1 in the mask
+			this.ant.setBitmask(this.ant.getBitmask()| (1<<chosen_node.getIndex()));
 			
 			//calculate the time to traverse (traversalTime) the edge from the current node to the result node (needs the delta and the cost present in the edge) ruled by an exponential distribution with mean delta*cost
 			traversalTime = Utils.expRandom(Move.delta*valid_list.get(chosen_index).getCost());

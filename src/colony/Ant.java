@@ -22,10 +22,20 @@ public class Ant {
 	 */
 	List<Node> path;
 	
+	int bitmask;
+	
 	/**
 	 * The weight associated with the Ant's path.
 	 */
 	double weight;
+
+	public int getBitmask() {
+		return bitmask;
+	}
+
+	public void setBitmask(int bitmask) {
+		this.bitmask = bitmask;
+	}
 
 	int[] pathcheck;
 
@@ -37,6 +47,7 @@ public class Ant {
 	public Ant(int nbnode) {
 		this.path = new LinkedList<Node>();
 		this.weight = Double.POSITIVE_INFINITY;
+		this.bitmask = 0b00;
 		this.pathcheck = new int[nbnode];
 	}
 
