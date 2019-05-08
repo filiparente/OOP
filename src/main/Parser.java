@@ -10,7 +10,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import colony.Ant;
-import colony.Colony;
+import colony.AntColony;
 import event.Evaporation;
 import event.Move;
 import graph.*;
@@ -57,7 +57,7 @@ public class Parser extends DefaultHandler {
 	/**
 	 * Colony of ants of the simulation.
 	 */
-	private Colony col;
+	private AntColony col;
 	
 	/**
 	 * Hamiltonian stochastic simulation.
@@ -281,7 +281,7 @@ public class Parser extends DefaultHandler {
 	 * Getter for the col field.
 	 * @return the colony.
 	 */
-	public Colony getColony() {
+	public AntColony getColony() {
 		return this.col;
 	}
 
@@ -336,7 +336,7 @@ public class Parser extends DefaultHandler {
 				System.exit(1);
 			}
 
-			col = new Colony(antcolsize);
+			col = new AntColony(antcolsize);
 			
 		} else if (qName.equalsIgnoreCase("graph")) {
 

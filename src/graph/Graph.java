@@ -3,12 +3,12 @@ package graph;
 import java.util.Arrays;
 
 /**
- * Class that implements the interface IGraph by parameterizing the generic node T as a type Node class.
+ * Graph class is a subclass of the abstract class GenericGraph by parameterizing the generic node T as a type Node class.
  * 
  * @author Filipa, Goncalo, Joana.
  *
  */
-public class Graph implements IGraph<Node>{
+public class Graph extends GenericGraph<Node>{
 	/**
 	 * Number of nodes in the graph.
 	 */

@@ -1,54 +1,33 @@
 package colony;
 
 /**
- * The Colony class that represents a colony of Ants and implements the interface IColony T.
- * The generic element T from the interface is parameterized by the Ant class.
+ * Abstract class for colonies of generic elements T.
+ * The subclasses must parameterize T and must store a vector of elements.
  * 
  * @author Filipa, Goncalo, Joana.
  *
+ * @param <T> the generic elements stored in the colony.
  */
-public class Colony implements IColony<Ant> {
-	
-	/**
-	 * The collection of Ants as a vector.
-	 */
-	private Ant[] ants;
 
+public abstract class Colony<T> {
 
 	/**
-	 * Constructor for a Colony of Ants.
-	 * @param size the size of the Colony, i.e., the number of Ants.
-	 * It allocates memory for the ants field as a vector of #size Ants.
+	 * Getter for the elements field.
+	 * @return the vector of generic elements.
 	 */
-	public Colony(int size) {
-		this.ants = new Ant[size];
-	}
-
-	/**
-	 * Getter for the ants field.
-	 * @return ants the vector of Ants.
-	 */
-	public Ant[] getElems() {
-		return ants;
-	}
-	
+	public abstract T[] getElems();
 	
 	/**
-	 * Setter for the ants field.
-	 * @param ants the vector of Ants.
+	 * Setter for the elements field.
+	 * @param elems the vector of generic elements.
 	 */
-	public void setElems(Ant[] ants) {
-		this.ants = ants;
-	}
+	public abstract void setElems(T[] elems);
 	
 	/**
-	 * Method to add a new Ant to the ants field vector.
-	 * @param ant the Ant to be added.
-	 * @param pos the position, i.e., the index in the vector of ants where we want to add the new Ant.
+	 * Method to add a new element to the elements field vector.
+	 * @param elem the element to be added to the colony.
+	 * @param pos the position, i.e., the index in the vector of elements where we want to add the new element.
 	 */
-	public void setElem(Ant ant, int pos){
-		this.ants[pos-1] = ant;
-	}
-
+	public abstract void setElem(T elem, int pos);
 
 }

@@ -39,7 +39,7 @@ public class HamiltonianSimulation extends Simulation{
 	/**
 	 * The colony of ants associated with the simulation.
 	 */
-	private Colony colony;
+	private AntColony colony;
 	
 	/**
 	 * The weighted graph associated with the simulation.
@@ -58,7 +58,7 @@ public class HamiltonianSimulation extends Simulation{
      * 
      * The superclass Simulation is initialized with the parameter finalinst.
      */
-	public HamiltonianSimulation(int antcolsize, double finalinst, double plevel, PEC pec, Colony colony, WGraph graph) {
+	public HamiltonianSimulation(int antcolsize, double finalinst, double plevel, PEC pec, AntColony colony, WGraph graph) {
 		super(finalinst);
 		this.antcolsize = antcolsize;
 		this.plevel = plevel;
@@ -77,7 +77,7 @@ public class HamiltonianSimulation extends Simulation{
 	 * The simulation cycle removes the next event from the PEC and simulates it, until the final instant is reached.
 	 */
 	 public void run() {
-		Colony c = this.getColony();
+		AntColony c = this.getColony();
  
 		IEvent currentEvent = null;
 
@@ -171,7 +171,7 @@ public class HamiltonianSimulation extends Simulation{
 	 * Getter for the colony field.
 	 * @return colony of ants.
 	 */
-	public Colony getColony() {
+	public AntColony getColony() {
 		return colony;
 	}
 
@@ -179,7 +179,7 @@ public class HamiltonianSimulation extends Simulation{
 	 * Setter for the colony field.
 	 * @param colony colony of ants.
 	 */
-	public void setColony(Colony colony) {
+	public void setColony(AntColony colony) {
 		this.colony = colony;
 	}
 }

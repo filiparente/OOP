@@ -1,15 +1,15 @@
 package graph;
 
 /**
- * Interface for the graph with generic nodes T.
- * The implementation should parameterize T. 
+ * Abstract class for the graph with generic nodes T.
+ * The subclasses should parameterize T. 
  * Assumes that implementation of the graph will provide a vector of nodes.
  * 
  * @author Filipa, Goncalo, Joana.
  *
  * @param <T> generic object T
  */
-public interface IGraph<T> {
+public abstract class GenericGraph<T> {
 	/**
 	 * Requires the implementation of the getter for the number of nodes in the graph.
 	 * @return number of nodes in the graph.
@@ -52,6 +52,6 @@ public interface IGraph<T> {
 	 * @param node node.
 	 * @param idx node index.
 	 */
-    public void setNode(T node, int idx);
+    public abstract void setNode(T node, int idx);
 
 }
