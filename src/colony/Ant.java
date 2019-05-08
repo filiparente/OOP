@@ -22,22 +22,22 @@ public class Ant {
 	 */
 	List<Node> path;
 	
-	int bitmask;
+	//int bitmask; it only works with less than 32 nodes (bit operations resolution)
 	
 	/**
 	 * The weight associated with the Ant's path.
 	 */
 	double weight;
 
-	public int getBitmask() {
+	/*public int getBitmask() {
 		return bitmask;
 	}
 
 	public void setBitmask(int bitmask) {
 		this.bitmask = bitmask;
-	}
+	}*/
 
-	//int[] pathcheck;
+	int[] pathcheck;
 
 	/**
 	 * Constructor for an Ant.
@@ -47,8 +47,13 @@ public class Ant {
 	public Ant(int nbnode) {
 		this.path = new LinkedList<Node>();
 		this.weight = Double.POSITIVE_INFINITY;
-		this.bitmask = 0b00;
-		//this.pathcheck = new int[nbnode];
+		//this.bitmask = 0b00;
+		this.pathcheck = new int[nbnode];
+		
+		//initialize all zeros
+		for(int i=0;i<nbnode;i++) {
+			this.pathcheck[i] = 0;
+		}
 	}
 
 	/**
@@ -114,11 +119,15 @@ public class Ant {
 		this.weight = weight;
 	}
 
-	/*public int[] getPathcheck() {
+	public int[] getPathcheck() {
 		return pathcheck;
 	}
-
-	public void setPathcheck(int[] pathcheck) {
-		this.pathcheck = pathcheck;
-	}*/
+	
+	public int getPathcheckOne(int idx) {
+		return pathcheck[idx-1];
+	}
+	
+	public void setPathcheck(int idx, int value) {
+		this.pathcheck[idx-1] = value;
+	}
 }

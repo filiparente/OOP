@@ -58,9 +58,8 @@ public class ShowResults extends Event{
 	@Override
 	public void SimulateEvent() {
 		ShowResults.observation += 1;
-		
+		System.out.println(graph.getShortest_path().toString());
 		System.out.println(this.toString());
-		
 		//simulate next ShowResults event
 		pec.addEvPEC(new ShowResults(time+finalinst/20, graph, pec, colony, finalinst));
 		
@@ -80,7 +79,8 @@ public class ShowResults extends Event{
 			
 			//erase the last comma
 			my_str = (String) my_str.subSequence(0, my_str.length()-1);
-			my_str +="}";
+			my_str +="}\n\t\t Cost: " + graph.getShortest_path_weight();
+			
 			
 		}
 		

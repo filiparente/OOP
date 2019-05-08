@@ -188,7 +188,8 @@ public class Parser extends DefaultHandler {
 			for(int i=1; i<=antcolsize; i++) {
 				Ant ant = new Ant(nbnodes);
 				ant.setNodePath( graph.getNode(nestnode)); //add the nest node to the ants path
-				ant.setBitmask(1 << nestnode); //set bitmask
+				//ant.setBitmask(1 << nestnode); //set bitmask
+				ant.setPathcheck(nestnode, 1);
 				col.setAnt(ant, i);
 			}
 			
