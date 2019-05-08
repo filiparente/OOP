@@ -302,7 +302,7 @@ public class Parser extends DefaultHandler {
 	/**
 	 * Flag to read the weight of an edge.
 	 */
-	boolean bWeight = false;
+	private boolean bWeight = false;
 
 
 	/**
