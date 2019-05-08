@@ -96,7 +96,6 @@ public class Ant {
 			return true;
 		}
 		return false;
-		//TODO: throw exception if the node is not found.
 	}
 
 	/**
