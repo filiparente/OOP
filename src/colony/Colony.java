@@ -1,10 +1,10 @@
 package colony;
 
 /**
- * The Colony class that represents a colony of Ants and implements the interface IColony<T>.
- * The generic element <T> from the interface is parameterized by the Ant class.
+ * The Colony class that represents a colony of Ants and implements the interface IColony T.
+ * The generic element T from the interface is parameterized by the Ant class.
  * 
- * @authors Filipa, Goncalo, Joana
+ * @author Filipa, Goncalo, Joana.
  *
  */
 public class Colony implements IColony<Ant> {

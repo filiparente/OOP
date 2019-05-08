@@ -18,7 +18,7 @@ import utils.Multinomial;
  * the colony of ants of the hamiltonian stochastic simulation. 
  * The time between two consecutive simulation of moves is a stochastic variable.
  * 
- * @authors Filipa, Goncalo, Joana.
+ * @author Filipa, Goncalo, Joana.
  *
  */
 

@@ -15,7 +15,7 @@ public class EventComparator implements Comparator<IEvent>{
     
 
 	/**
-	 * Overriding of the method compare() from Comparator<T> interface, where T is an IEvent object inside this class.
+	 * Overriding of the method compare() from ComparatorT interface, where T is an IEvent object inside this class.
 	 * It compares two events in ascending order of their times.
 	 * 
 	 * @param e1 first event to be compared.

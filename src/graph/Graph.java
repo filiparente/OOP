@@ -3,7 +3,7 @@ package graph;
 import java.util.Arrays;
 
 /**
- * Class that implements the interface IGraph by parameterizing the generic node <T> as a type Node class.
+ * Class that implements the interface IGraph by parameterizing the generic node T as a type Node class.
  * 
  * @author Filipa, Goncalo, Joana.
  *
@@ -97,7 +97,7 @@ public class Graph implements IGraph<Node>{
     /**
      * Setter for a specific node in the nodes field.
      * @param node the node to add.
-     * @idx the index of the node.
+     * @param idx the index of the node.
      */
     public void setNode(Node node, int idx) {
         this.nodes[idx-1] = node;

@@ -13,7 +13,7 @@ import simulation.HamiltonianSimulation;
  * It simulates 20 times during one run of the simulation, i.e., 20 prints are shown to the user from the start to
  * the end of the simulation.
  * 
- * @authors Filipa, Goncalo, Joana.
+ * @author Filipa, Goncalo, Joana.
  *
  */
 public class ShowResults extends DeterministicEvent{

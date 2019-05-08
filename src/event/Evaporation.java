@@ -12,7 +12,7 @@ import utils.Utils;
  * some parameter. This implementation assumes an association with an edge belonging to
  * a graph - the graph of the stochastic simulation. The time between two consecutive simulation of evaporations is a stochastic variable.
  * 
- * @authors Filipa, Goncalo, Joana.
+ * @author Filipa, Goncalo, Joana.
  *
  */
 public class Evaporation extends StochasticEvent{	

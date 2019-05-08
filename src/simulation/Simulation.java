@@ -16,7 +16,7 @@ public abstract class Simulation implements ISimulation{
 	
 	/**
 	 * Constructor for the Simulation class.
-	 * @param finalinst
+	 * @param finalinst final instant of the simulation.
 	 */
 	public Simulation(double finalinst) {
 		

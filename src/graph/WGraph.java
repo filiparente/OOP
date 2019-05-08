@@ -7,7 +7,7 @@ import java.util.List;
  * Weighted Graph class is a subclass of Graph where the weights of the
  * edges are used to define the shortest path of a graph and its corresponding weight.
  * 
- * @author Filipa, Goncalo, Joana
+ * @author Filipa, Goncalo, Joana.
  *
  */
 public class WGraph extends Graph{

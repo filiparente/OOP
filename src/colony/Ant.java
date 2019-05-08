@@ -11,7 +11,7 @@ import graph.Node;
  * Therefore, the implementation of Ant provided assumes that it is used in a problem using a graph represented by nodes, and the ants store the path they traverse in the graph
  * as a list of nodes.
  * 
- * @authors Filipa, Goncalo, Joana
+ * @author Filipa, Goncalo, Joana
  *
  */
 public class Ant {
@@ -34,6 +34,7 @@ public class Ant {
 
 	/**
 	 * Constructor for an Ant.
+	 * @param nbnode number of nodes of the graph.
 	 * The path is set as a linked list of Nodes.
 	 * The weight of the path is initialized with infinity.
 	 * All nodes are initialized as non-visited.
