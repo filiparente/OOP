@@ -55,7 +55,6 @@ public class ShowResults extends DeterministicEvent{
 	@Override
 	public void SimulateEvent() {
 		ShowResults.observation += 1;
-		System.out.println(sim.getGraph().getShortest_path().toString());
 		System.out.println(toString());
 		
 		//simulate next ShowResults event
@@ -86,7 +85,7 @@ public class ShowResults extends DeterministicEvent{
 			
 			//erase the last comma
 			my_str = (String) my_str.subSequence(0, my_str.length()-1);
-			my_str +="}\n\t\t Cost: " + sim.getGraph().getShortest_path_weight();	
+			my_str +="}\n";
 			
 		}
 		return my_str;
