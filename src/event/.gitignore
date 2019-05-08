@@ -3,3 +3,6 @@
 /EventComparator.class
 /Move.class
 /ShowResults.class
+/IEvent.class
+/DeterministicEvent.class
+/StochasticEvent.class

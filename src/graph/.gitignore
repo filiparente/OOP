@@ -1,3 +1,6 @@
 /Edge.class
 /Graph.class
 /Node.class
+/IGraph.class
+/INode.class
+/WGraph.class

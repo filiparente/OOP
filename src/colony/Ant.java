@@ -3,7 +3,6 @@ package colony;
 import java.util.LinkedList;
 import java.util.List;
 
-import graph.Graph;
 import graph.Node;
 
 /**
@@ -20,39 +19,33 @@ public class Ant {
 	/**
 	 * The path traversed by the Ant as a list of Nodes.
 	 */
-	List<Node> path;
+	private List<Node> path;
 	
-	//int bitmask; it only works with less than 32 nodes (bit operations resolution)
+	/**
+	 * A vector of booleans that indicate which nodes of the graph were already visited by this ant.
+	 */
+	private boolean[] pathcheck;
 	
 	/**
 	 * The weight associated with the Ant's path.
 	 */
-	double weight;
+	private double weight;
 
-	/*public int getBitmask() {
-		return bitmask;
-	}
-
-	public void setBitmask(int bitmask) {
-		this.bitmask = bitmask;
-	}*/
-
-	int[] pathcheck;
 
 	/**
 	 * Constructor for an Ant.
 	 * The path is set as a linked list of Nodes.
 	 * The weight of the path is initialized with infinity.
+	 * All nodes are initialized as non-visited.
 	 */
 	public Ant(int nbnode) {
 		this.path = new LinkedList<Node>();
 		this.weight = Double.POSITIVE_INFINITY;
-		//this.bitmask = 0b00;
-		this.pathcheck = new int[nbnode];
+		this.pathcheck = new boolean[nbnode];
 		
 		//initialize all zeros
 		for(int i=0;i<nbnode;i++) {
-			this.pathcheck[i] = 0;
+			this.pathcheck[i] = false;
 		}
 	}
 
@@ -82,21 +75,23 @@ public class Ant {
 	
 	/**
 	 * Method to add a node to the ant's path.
+	 * This method also checks this node as visited in the ant's pathcheck field.
 	 * @param node the node to add to the ant's path.
 	 */
 	public void setNodePath(Node node) {
 		this.path.add(node);
-		//this.pathcheck[node.getIndex()-1] = 1;
+		this.pathcheck[node.getIndex()-1] = true;
 	}
 	
 	/**
 	 * Method to remove a given node from the ant's path.
+	 * This method also checks this node as non-visited in the ant's pathcheck field.
 	 * @param node the node to be removed from the ant's path.
 	 * @return true if the node is present, false otherwise.
 	 */
 	public boolean removeNodePath(Node node) {
 		if(this.path.remove(node)) {
-			//this.pathcheck[node.getIndex() - 1] = 0;
+			this.pathcheck[node.getIndex() - 1] = false;
 			return true;
 		}
 		return false;
@@ -119,15 +114,29 @@ public class Ant {
 		this.weight = weight;
 	}
 
-	public int[] getPathcheck() {
+	/**
+	 * Getter for the pathcheck field.
+	 * @return the ant's pathcheck.
+	 */
+	public boolean[] getPathcheck() {
 		return pathcheck;
 	}
 	
-	public int getPathcheckOne(int idx) {
+	/**
+	 * Getter for one node in the pathcheck field.
+	 * @param idx the index of the node.
+	 * @return true if the element with that index was already visited by this ant; false, otherwise.
+	 */
+	public boolean getPathcheckOne(int idx) {
 		return pathcheck[idx-1];
 	}
 	
-	public void setPathcheck(int idx, int value) {
+	/**
+	 * Setter for one node in the pathcheck field.
+	 * @param idx the index of the node.
+	 * @param value the value to set the node with.
+	 */
+	public void setPathcheck(int idx, boolean value) {
 		this.pathcheck[idx-1] = value;
 	}
 }

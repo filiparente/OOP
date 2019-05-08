@@ -1,17 +1,19 @@
 package colony;
 
 /**
- * The Colony class represents a colony of Ants.
+ * The Colony class that represents a colony of Ants and implements the interface IColony<T>.
+ * The generic element <T> from the interface is parameterized by the Ant class.
  * 
  * @authors Filipa, Goncalo, Joana
  *
  */
-public class Colony {
+public class Colony implements IColony<Ant> {
 	
 	/**
 	 * The collection of Ants as a vector.
 	 */
-	Ant[] ants;
+	private Ant[] ants;
+
 
 	/**
 	 * Constructor for a Colony of Ants.
@@ -26,15 +28,16 @@ public class Colony {
 	 * Getter for the ants field.
 	 * @return ants the vector of Ants.
 	 */
-	public Ant[] getAnts() {
+	public Ant[] getElems() {
 		return ants;
 	}
+	
 	
 	/**
 	 * Setter for the ants field.
 	 * @param ants the vector of Ants.
 	 */
-	public void setAnts(Ant[] ants) {
+	public void setElems(Ant[] ants) {
 		this.ants = ants;
 	}
 	
@@ -43,7 +46,7 @@ public class Colony {
 	 * @param ant the Ant to be added.
 	 * @param pos the position, i.e., the index in the vector of ants where we want to add the new Ant.
 	 */
-	public void setAnt(Ant ant, int pos){
+	public void setElem(Ant ant, int pos){
 		this.ants[pos-1] = ant;
 	}
 

@@ -1,46 +1,46 @@
 package event;
 import graph.Edge;
-import graph.Graph;
-import pec.PEC;
+import simulation.HamiltonianSimulation;
 import utils.Utils;
 
 /**
- * The Evaporation class is a subclass of the abstract class Event, from which it inherits
- * the fields time, graph and pec.
+ * The Evaporation class is a subclass of the abstract class StochasticEvent, from which it inherits
+ * the field time and the simulation.
+ * 
  * The Evaporation class implements the method simulateEvent() in which
  * the pheromones associated with an edge of a graph are reduced according to
  * some parameter. This implementation assumes an association with an edge belonging to
- * a graph - the graph of the stochastic simulation, inherited from the superclass Event.
+ * a graph - the graph of the stochastic simulation. The time between two consecutive simulation of evaporations is a stochastic variable.
  * 
  * @authors Filipa, Goncalo, Joana.
  *
  */
-public class Evaporation extends Event{	
+public class Evaporation extends StochasticEvent{	
 	/**
 	 * static field eta controls the time between the current evaporation and the next one.
 	 * static field rho controls the amount of pheromones being reduced.
 	 */
-	static double eta, rho;
+	private static double eta, rho;
 	
 	/**
 	 * The edge associated to the Evaporation event. Only the pheromones of this edge are evaporated.
 	 */
-	Edge edge;
+	private Edge edge;
 
 	/**
 	 * Constructor of the Evaporation event.
-	 * @param time the current time. The field time of the superclass Event is instantiated with this time
+	 * 
+	 * @param time the current time. The field time of the superclass StochasticEvent is instantiated with this time
 	 * plus the result of an exponential distribution with mean eta, the static field from the Evaporation class.
 	 * Therefore, Evaporation events are invoked with the current time and the field time from the superclass is, in this case, associated with the next
 	 * Evaporation event.
 	 * 
 	 * @param edge the edge to reduce pheromones from.
-	 * @param graph the graph associated with the simulation.
-	 * @param pec the pec associated with the simulation.
+	 * @param sim the hamiltonian stochastic simulation with which the evaporation events are associated.
 	 */
-	public Evaporation(double time, Edge edge, Graph graph, PEC pec) {
+	public Evaporation(double time, Edge edge, HamiltonianSimulation sim) {
 
-		super(time + Utils.expRandom(Evaporation.eta), graph, pec);
+		super(time + Utils.expRandom(Evaporation.eta), sim);
 		this.edge = edge;
 	}
 
@@ -76,21 +76,37 @@ public class Evaporation extends Event{
 		Evaporation.rho = rho;
 	}
 
-	@Override
+	/**
+	 * Getter for the edge associated with the evaporation event.
+	 * @return edge.
+	 */
+	Edge getEdge() {
+		return edge;
+	}
+
+	/**
+	 * Setter for the edge associated with the evaporation event.
+	 * @param edge
+	 */
+	void setEdge(Edge edge) {
+		this.edge = edge;
+	}
+
+	
 	/**
 	 * Simulates the Evaporation event. 
 	 * 
-	 * The counter for the number of evaporation events is incremented. This counter belongs to class ShowResults, subclass of the abstract class Event.
-	 * As it's a static field with package visibility inside the same package, it can be accessed.
+	 * The counter for the number of evaporation events is incremented. This counter belongs to class ShowResults, subclass of the abstract class DeterministicEvent.
 	 * 
 	 * Performs the evaporation by reducing the pheromone level of this edge by rho.
 	 * If, after the evaporation, the pheromone level of the respective edge is greater than zero, schedules the next evaporation event for this edge,
 	 * and adds the event to the pec. Otherwise, sets the pheromone level to zero, because it can't be negative.
 	 * 
 	 */
+	@Override
 	public void SimulateEvent() {
 		
-		ShowResults.eevents += 1;
+		ShowResults.setEevents(ShowResults.getEevents()+1);
 
 		//Evaporation
 		edge.setPheromones(edge.getPheromones()-Evaporation.rho);
@@ -99,10 +115,10 @@ public class Evaporation extends Event{
 			edge.setPheromones(0);
 		else {
 			//schedule next Evaporation event for this edge
-			Evaporation new_evaporation = new Evaporation(this.time, edge, graph, pec);
+			Evaporation new_evaporation = new Evaporation(time, edge, sim);
 
 			//add it to the PEC
-			pec.addEvPEC(new_evaporation);
+			sim.getPec().addEvPEC(new_evaporation);
 		}
 	}
 }

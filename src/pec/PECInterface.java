@@ -1,10 +1,27 @@
 package pec;
 
-import event.Event;
+import event.IEvent;
 
+/**
+ * Interface for the PEC (Pending event container).
+ * It requires the implementation of two methods: the addEvPEC, to add
+ * new events to the PEC as interface event (IEvent) objects; and the nextEvPEC,
+ * to remove from the PEC the next event to be simulated.
+ * 
+ * @author Filipa, Goncalo, Joana.
+ *
+ */
 public interface PECInterface {
 	
-	public void addEvPEC(Event e);
+	/**
+	 * Method to add a new event to the PEC.
+	 * @param e the IEvent object to add.
+	 */
+	public abstract void addEvPEC(IEvent e);
 	
-	public Event nextEvPEC();
+	/**
+	 * Method to remove from the PEC the next event to be simulated.
+	 * @return the next event to be simulated.
+	 */
+	public abstract IEvent nextEvPEC();
 }

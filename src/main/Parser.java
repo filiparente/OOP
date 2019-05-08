@@ -1,9 +1,9 @@
-package pooproject;
+package main;
 
 import java.util.ArrayList;
 
 import pec.PEC;
-import simulation.Simulation;
+import simulation.HamiltonianSimulation;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -20,9 +20,9 @@ public class Parser extends DefaultHandler {
 	protected int antcolsize, nbnodes, nestnode, targetnode, edge_cost, nodeidx, W = 0;
 	protected double finalinst, plevel, alpha, beta, delta, eta, rho;
 	protected Node node;
-	protected Graph graph;
+	protected WGraph graph;
 	protected Colony col;
-	protected Simulation sim;
+	protected HamiltonianSimulation sim;
 	
 	protected ArrayList<Node> nodeList = null;
 	
@@ -134,7 +134,7 @@ public class Parser extends DefaultHandler {
 		return this.col;
 	}
 
-	public Simulation getSim() {return  this.sim; }
+	public HamiltonianSimulation getSim() {return  this.sim; }
 
 	public int getW() {
 		return this.W;
@@ -177,7 +177,7 @@ public class Parser extends DefaultHandler {
 				System.exit(1);
 			}
 
-			graph = new Graph(nbnodes, nestnode);
+			graph = new WGraph(nbnodes, nestnode);
 			
 			//create a new node and set id
 			for (int i = 1; i<=nbnodes; i++) {
@@ -189,8 +189,8 @@ public class Parser extends DefaultHandler {
 				Ant ant = new Ant(nbnodes);
 				ant.setNodePath( graph.getNode(nestnode)); //add the nest node to the ants path
 				//ant.setBitmask(1 << nestnode); //set bitmask
-				ant.setPathcheck(nestnode, 1);
-				col.setAnt(ant, i);
+				ant.setPathcheck(nestnode, true);
+				col.setElem(ant, i);
 			}
 			
 		} else if (qName.equalsIgnoreCase("node")) {
@@ -249,17 +249,15 @@ public class Parser extends DefaultHandler {
 			}
 
 			
-			//event = new Evaporation(0.0, eta, rho);
 			Evaporation.setEta(eta);
 			Evaporation.setRho(rho);
 		}
 
-		sim = new Simulation(antcolsize, finalinst, plevel, new PEC(), col, graph);
+		sim = new HamiltonianSimulation(antcolsize, finalinst, plevel, new PEC(), col, graph);
 	}
 
 	@Override
 	public void endDocument() throws SAXException {
-		// TODO Auto-generated method stub
 		super.endDocument();
 		sim.getGraph().setW(this.W * this.plevel);
 	}
