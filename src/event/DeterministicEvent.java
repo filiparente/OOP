@@ -10,7 +10,7 @@ package event;
  *
  */
 
-public abstract class DeterministicEvent implements IEvent{
+  abstract class DeterministicEvent implements IEvent{
 	
 	/**
 	 * Time at which the event occurs.

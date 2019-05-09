@@ -338,7 +338,7 @@ public class Move extends StochasticEvent{
 	 * then the path is an hamiltonian cycle.
 	 */
 	
-	private boolean check_hamiltonian_cycle(List<Node> path, Graph graph) {
+	private boolean check_hamiltonian_cycle(List<Node> path, WGraph graph) {
 		int n_nodes = graph.getNbnode();
 		
 		//number of elements is correct

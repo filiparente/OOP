@@ -24,7 +24,7 @@ import graph.*;
  * @author Filipa, Goncalo, Joana.
  *
  */
-public class Parser extends DefaultHandler {
+class Parser extends DefaultHandler {
 	/**
 	 * antcolsize: size of the colony of ants.
 	 * nbnodes: number of nodes of the graph.

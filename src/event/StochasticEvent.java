@@ -10,7 +10,7 @@ import simulation.HamiltonianSimulation;
  *
  */
 
-public abstract class StochasticEvent implements IEvent{
+ abstract class StochasticEvent implements IEvent{
 
 	/**
 	 * Time is the exact instant of the event to be simulated.

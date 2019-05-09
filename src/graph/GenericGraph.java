@@ -9,7 +9,7 @@ package graph;
  *
  * @param <T> generic object T
  */
-public abstract class GenericGraph<T> {
+ abstract class GenericGraph<T> {
 	/**
 	 * Requires the implementation of the getter for the number of nodes in the graph.
 	 * @return number of nodes in the graph.

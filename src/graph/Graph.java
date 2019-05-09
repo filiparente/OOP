@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author Filipa, Goncalo, Joana.
  *
  */
-public class Graph extends GenericGraph<Node>{
+ class Graph extends GenericGraph<Node>{
 	/**
 	 * Number of nodes in the graph.
 	 */

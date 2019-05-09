@@ -7,7 +7,7 @@ package simulation;
  * @author Filipa, Goncalo, Joana.
  *
  */
-public abstract class Simulation implements ISimulation{
+ abstract class Simulation implements ISimulation{
 	
 	/**
 	 * Final instant of the simulation.
