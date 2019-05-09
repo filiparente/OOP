@@ -1,3 +1,9 @@
+/**
+ * The package graph contains the generic abstract class GenericGraph which represents a graph with generic elements.
+ * The Graph class is a subclass of GenericGraph where the elements are Nodes from the Node class. The WGraph class is a subclass
+ * of Graph where structures related to the weight of the edges are stored, such as the graph's shortest cycle.
+ * The Node structure contain a list of edge objects, defined in the Edge class.
+ */
 package graph;
 
 /**
@@ -14,44 +20,44 @@ package graph;
 	 * Requires the implementation of the getter for the number of nodes in the graph.
 	 * @return number of nodes in the graph.
 	 */
-	public abstract int getNbnode(); 
+	protected abstract int getNbnode(); 
 
 	/**
 	 * Requires the implementation of the setter for the number of nodes in the graph.
 	 * @param nbnode number of nodes.
 	 */
-    public abstract void setNbnode(int nbnode);
+    protected abstract void setNbnode(int nbnode);
     
     /**
 	 * Requires the implementation of the getter for the index of the nest node of the graph.
 	 * @return index of the nest node.
 	 */
-    public abstract int getNestnode();
+    protected abstract int getNestnode();
 
     /**
 	 * Requires the implementation of the setter for the index of the nest node of the graph.
 	 * @param nestnode index of the nest node.
 	 */
-    public abstract void setNestnode(int nestnode);
+    protected abstract void setNestnode(int nestnode);
 
     /**
 	 * Requires the implementation of the getter for all nodes in the graph.
 	 * @return graph nodes.
 	 */
-	public abstract T[] getNodes();
+	protected abstract T[] getNodes();
 
 	/**
 	 * Requires the implementation of the getter for a given node in the graph.
 	 * @param idx node index.
 	 * @return graph node.
 	 */
-    public abstract T getNode(int idx);
+    protected abstract T getNode(int idx);
     
     /**
 	 * Requires the implementation of the setter for a given node in the graph.
 	 * @param node node.
 	 * @param idx node index.
 	 */
-    public abstract void setNode(T node, int idx);
+    protected abstract void setNode(T node, int idx);
 
 }

@@ -1,3 +1,6 @@
+/**
+ * The package pec contains the PEC interface and the PEC class which implements the PEC interface as a priority queue of IEvent objects.
+ */
 package pec;
 import event.IEvent;
 import event.EventComparator;
@@ -19,7 +22,7 @@ import java.util.PriorityQueue;
 public class PEC implements PECInterface {
 	/**
 	 * Priority queue of IEvent objects with EventComparator prior.
-	 * Parameterization of the generic PriorityQueue<T> from the java.util library where T is an IEvent object.
+	 * Parameterization of the generic PriorityQueueT from the java.util library where T is an IEvent object.
 	 */
 	private PriorityQueue<IEvent> PEC_q = new PriorityQueue<IEvent>(new EventComparator());
 
